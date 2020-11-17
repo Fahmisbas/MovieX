@@ -1,14 +1,11 @@
 package com.acsl.moviex.ui.navigation
 
 import androidx.lifecycle.ViewModel
-import com.acsl.moviex.data.Movie
-import com.acsl.moviex.data.repositories.MovieRepository
+import com.acsl.moviex.data.source.DataRepository
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val repository: DataRepository) : ViewModel() {
 
-    private val repository = MovieRepository()
+    fun getAllMovies()  = repository.getAllMovies()
+    fun getAllTvShows() = repository.getAllTvShows()
 
-    fun getMovieData() : ArrayList<Movie>? = repository.getMovieData()
-
-    fun getTvShowData() : ArrayList<Movie>? = repository.getTvShowData()
 }

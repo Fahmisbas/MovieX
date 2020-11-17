@@ -8,13 +8,13 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.acsl.moviex.R
-import com.acsl.moviex.data.repositories.MovieRepository
+import com.acsl.moviex.data.source.DataRepository
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 
 class HomeActivityTest {
-    private val dummyMovies = MovieRepository().getMovieData()
+    private val dummyMovies = DataRepository().getMovieData()
 
     @get:Rule
     var activityRule = ActivityTestRule(HomeActivity::class.java)
@@ -28,7 +28,7 @@ class HomeActivityTest {
     fun loadMovieCourse() {
         onView(allOf(withId(R.id.rv_tabs), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         onView(withId(R.id.tv_movie_name)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_movie_name)).check(matches(withText(dummyMovies?.get(0)?.movieName)))
+        onView(withId(R.id.tv_movie_name)).check(matches(withText(dummyMovies?.get(0)?.originalTitle)))
         onView(withId(R.id.tv_overview)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_overview)).check(matches(withText(dummyMovies?.get(0)?.overview)))
     }

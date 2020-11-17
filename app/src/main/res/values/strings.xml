@@ -5,5 +5,7 @@
 
     <string name="tab_title_movie">Movies</string>
     <string name="tab_title_tvshow">TV Shows</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
 
 </resources>

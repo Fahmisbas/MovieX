@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.acsl.moviex.R
-import com.acsl.moviex.data.Movie
+import com.acsl.moviex.data.entities.MovieEntity
+import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.BASE_IMAGE_URL
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class ListMovieAdapter(private val movieList: ArrayList<Movie>, private val context: Context) : RecyclerView.Adapter<ListMovieAdapter.ViewHolder>() {
+class ListMovieAdapter(private val movieList: ArrayList<MovieEntity>, private val context: Context) : RecyclerView.Adapter<ListMovieAdapter.ViewHolder>() {
 
     var onItemClickCallback: OnItemClickCallback? = null
 
-    fun updateList(movies: ArrayList<Movie>, isNotEmpty: (Boolean) -> Unit) {
+    fun updateList(movies: ArrayList<MovieEntity>, isNotEmpty: (Boolean) -> Unit) {
         movieList.clear()
         movieList.addAll(movies)
         isNotEmpty.invoke(movieList.isNotEmpty())
@@ -36,25 +37,23 @@ class ListMovieAdapter(private val movieList: ArrayList<Movie>, private val cont
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(movie: Movie, context: Context, itemClicked: () -> Unit) {
+        fun bind(movie: MovieEntity, context: Context, itemClicked: () -> Unit) {
             with(itemView) {
                 Glide.with(this.context)
-                    .load(getImage(movie.imageName,context))
+                    .load(BASE_IMAGE_URL+movie.posterPath)
                     .into(iv_poster)
 
                 setOnClickListener {
                     itemClicked.invoke()
                 }
 
-                tv_movie_name.text = movie.movieName
+                tv_movie_name.text = movie.originalTitle
+                tv_movie_desc.text = movie.overview
             }
-        }
-        private fun getImage(imageName: String?, context: Context): Int {
-            return context.resources.getIdentifier(imageName, "drawable", context.packageName)
         }
     }
 
     interface OnItemClickCallback{
-        fun onItemClicked(movie: Movie)
+        fun onItemClicked(movie: MovieEntity)
     }
 }
