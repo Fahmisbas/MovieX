@@ -49,7 +49,6 @@ class HomeActivityTest {
         onView(withId(R.id.tv_movie_name)).check(matches(withText(movieInTest.originalTitle)))
         onView(withId(R.id.tv_overview)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_overview)).check(matches(withText(movieInTest.overview)))
-
     }
 
 

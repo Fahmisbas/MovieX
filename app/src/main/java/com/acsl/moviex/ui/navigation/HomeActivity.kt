@@ -2,13 +2,13 @@ package com.acsl.moviex.ui.navigation
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.acsl.moviex.R
-import com.acsl.moviex.data.entities.MovieEntity
+import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.ui.tabs.SectionPagerAdapter
+import com.acsl.moviex.util.gone
 import com.acsl.moviex.viewmodel.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,17 +30,16 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         viewModel.getAllMovies().observe(this, { movies ->
             viewModel.getAllTvShows().observe(this, { tvShows ->
                 if (movies.isNotEmpty() && tvShows.isNotEmpty()) {
-                    load_viewpager.visibility = View.GONE
+                    load_viewpager.gone()
                     setupWithViewPager(movies, tvShows)
                 }
             })
         })
     }
 
-    private fun setupWithViewPager(movies: List<MovieEntity>, tvShows: List<MovieEntity>) {
+    private fun setupWithViewPager(data: List<DataEntity>, tvShows: List<DataEntity>) {
         nav.setOnNavigationItemSelectedListener(this)
-
-        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, movies, tvShows)
+        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, data, tvShows)
         view_pager.adapter = sectionPagerAdapter
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(

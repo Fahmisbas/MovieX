@@ -3,12 +3,12 @@ package com.acsl.moviex.ui.tabs
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.acsl.moviex.R
-import com.acsl.moviex.data.entities.MovieEntity
+import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.ui.adapter.ListMovieAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
 import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_MOVIE_DETAIL
@@ -40,17 +40,17 @@ class TabsFragment(context: Context) : Fragment() {
 
     private fun setList(index: Int) {
         if (index == 1) {
-            arguments?.getParcelableArrayList<MovieEntity>(MOVIES)?.let {
+            arguments?.getParcelableArrayList<DataEntity>(MOVIES)?.let {
                 updateList(it)
             }
         } else {
-            arguments?.getParcelableArrayList<MovieEntity>(TV_SHOWS)?.let {
+            arguments?.getParcelableArrayList<DataEntity>(TV_SHOWS)?.let {
                 updateList(it)
             }
         }
     }
 
-    private fun updateList(list: ArrayList<MovieEntity>) {
+    private fun updateList(list: ArrayList<DataEntity>) {
         adapter.updateList(list) { isNotEmpty ->
             if (isNotEmpty) {
                 onItemClicked()
@@ -60,9 +60,9 @@ class TabsFragment(context: Context) : Fragment() {
 
     private fun onItemClicked() {
         adapter.onItemClickCallback = object : ListMovieAdapter.OnItemClickCallback {
-            override fun onItemClicked(movie: MovieEntity) {
+            override fun onItemClicked(data: DataEntity) {
                 Intent(context, DetailActivity::class.java).apply {
-                    putExtra(EXTRA_MOVIE_DETAIL, movie)
+                    putExtra(EXTRA_MOVIE_DETAIL, data)
                     startActivity(this)
                 }
             }
@@ -76,15 +76,15 @@ class TabsFragment(context: Context) : Fragment() {
 
         fun newInstance(
             index: Int,
-            movies: List<MovieEntity>,
-            tvShows: List<MovieEntity>,
-            context : Context
+            data: List<DataEntity>,
+            tvShows: List<DataEntity>,
+            context: Context
         ): TabsFragment {
             val fragment = TabsFragment(context)
             val bundle = Bundle()
 
-            bundle.putParcelableArrayList(MOVIES, movies as ArrayList<MovieEntity>)
-            bundle.putParcelableArrayList(TV_SHOWS, tvShows as ArrayList<MovieEntity>)
+            bundle.putParcelableArrayList(MOVIES, data as ArrayList<DataEntity>)
+            bundle.putParcelableArrayList(TV_SHOWS, tvShows as ArrayList<DataEntity>)
             bundle.putInt(SECTION_NUMBER, index)
 
             fragment.arguments = bundle

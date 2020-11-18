@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.acsl.moviex.R
-import com.acsl.moviex.data.entities.MovieEntity
+import com.acsl.moviex.data.entities.DataEntity
 
 class SectionPagerAdapter(
     private val context: Context,
     fm: FragmentManager,
-    private var movies: List<MovieEntity>,
-    private var tvShow: List<MovieEntity>
+    private var data: List<DataEntity>,
+    private var tvShow: List<DataEntity>
 ) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -25,11 +25,11 @@ class SectionPagerAdapter(
     override fun getCount() = 2
 
     override fun getItem(position: Int): Fragment {
-        when(position) {
-            1 -> return TabsFragment.newInstance(0, movies, tvShow,context)
-            2 -> return TabsFragment.newInstance(1, movies, tvShow,context)
+        when (position) {
+            1 -> return TabsFragment.newInstance(0, data, tvShow, context)
+            2 -> return TabsFragment.newInstance(1, data, tvShow, context)
         }
-        return TabsFragment.newInstance(1, movies, tvShow, context)
+        return TabsFragment.newInstance(1, data, tvShow, context)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

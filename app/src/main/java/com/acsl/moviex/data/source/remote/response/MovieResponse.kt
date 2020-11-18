@@ -1,17 +1,19 @@
 package com.acsl.moviex.data.source.remote.response
 
+import com.acsl.moviex.BuildConfig
 import com.google.gson.annotations.SerializedName
 
 class MovieResponse(
+
     @SerializedName("results")
-    var results : List<ResultResponse>
+    var results: List<ResultResponse>
 ) {
     companion object {
-        const val API_KEY = "API_KEY"
-        const val BASE_IMAGE_URL = "http://image.tmdb.org/t/p/original"
+        const val API_KEY = BuildConfig.ApiKey
+        const val BASE_IMAGE_URL = BuildConfig.BaseImageUrl
+        const val BASE_URL = BuildConfig.BaseUrl
         const val LANGUAGE_PREF = "en-US"
         const val PAGE = "1"
-        const val BASE_URL = "https://api.themoviedb.org/"
     }
 }
 

@@ -3,7 +3,7 @@ package com.acsl.moviex.ui.navigation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.acsl.moviex.data.entities.MovieEntity
+import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.DataRepository
 import com.acsl.moviex.util.DataDummy
 import org.junit.Assert
@@ -29,7 +29,7 @@ class HomeViewModelTest {
     private lateinit var repository : DataRepository
 
     @Mock
-    private lateinit var observer: Observer<List<MovieEntity>>
+    private lateinit var observer: Observer<List<DataEntity>>
 
     @Before
     fun setUp() {
@@ -39,7 +39,7 @@ class HomeViewModelTest {
     @Test
     fun getMovies() {
         val dummyMovies = DataDummy.generateDummyMovies()
-        val movies = MutableLiveData<List<MovieEntity>>()
+        val movies = MutableLiveData<List<DataEntity>>()
         movies.value = dummyMovies
 
         `when`(repository.getAllMovies()).thenReturn(movies)
@@ -55,7 +55,7 @@ class HomeViewModelTest {
     @Test
     fun getTvShows() {
         val dummyTvShows = DataDummy.generateDummyTvShows()
-        val courses = MutableLiveData<List<MovieEntity>>()
+        val courses = MutableLiveData<List<DataEntity>>()
         courses.value = dummyTvShows
 
 

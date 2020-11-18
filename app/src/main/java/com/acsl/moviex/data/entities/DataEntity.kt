@@ -5,9 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-class MovieEntity(
-    var posterPath : String?,
-    var id : String?,
-    var originalTitle : String?,
-    var overview : String?
+class DataEntity(
+    var posterPath: String?,
+    var id: String?,
+    var originalTitle: String?,
+    var overview: String?
 ) : Parcelable

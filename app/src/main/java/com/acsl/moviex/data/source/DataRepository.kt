@@ -2,9 +2,9 @@ package com.acsl.moviex.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.acsl.moviex.data.entities.MovieEntity
+import com.acsl.moviex.data.entities.DataEntity
+import com.acsl.moviex.data.source.remote.RemoteDataSource
 import com.acsl.moviex.data.source.remote.response.MovieResponse
-import com.acsl.moviex.data.source.remote.response.RemoteDataSource
 import com.acsl.moviex.util.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
@@ -12,20 +12,18 @@ import retrofit2.Response
 
 open class DataRepository(private val remoteDataSource: RemoteDataSource) : DataSource {
 
-    private var _error = MutableLiveData<Boolean>()
-    var error : LiveData<Boolean> = _error
 
-    override fun getAllMovies() : LiveData<List<MovieEntity>>{
+    override fun getAllMovies(): LiveData<List<DataEntity>> {
         EspressoIdlingResource.increment()
-        val movies = MutableLiveData<List<MovieEntity>>()
+        val movies = MutableLiveData<List<DataEntity>>()
         remoteDataSource.getMoviesRemotely().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback ->
-                        val moviesList = arrayListOf<MovieEntity>()
+                        val moviesList = arrayListOf<DataEntity>()
                         for (result in callback.results) {
                             moviesList.add(
-                                MovieEntity(
+                                DataEntity(
                                     result.posterPath,
                                     result.id,
                                     result.originalTitle,
@@ -34,31 +32,29 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
                             )
                         }
                         movies.postValue(moviesList)
-                        _error.postValue(false)
                         EspressoIdlingResource.decrement()
                     }
                 }
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                _error.postValue(true)
                 t.printStackTrace()
             }
         })
         return movies
     }
 
-    override fun getAllTvShows(): LiveData<List<MovieEntity>> {
+    override fun getAllTvShows(): LiveData<List<DataEntity>> {
         EspressoIdlingResource.increment()
-        val tvShows = MutableLiveData<List<MovieEntity>>()
+        val tvShows = MutableLiveData<List<DataEntity>>()
         remoteDataSource.getTvShowsRemotely().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback ->
-                        val tvShowList = arrayListOf<MovieEntity>()
+                        val tvShowList = arrayListOf<DataEntity>()
                         for (result in callback.results) {
                             tvShowList.add(
-                                MovieEntity(
+                                DataEntity(
                                     result.posterPath,
                                     result.id,
                                     result.originalName,
@@ -67,14 +63,12 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
                             )
                         }
                         tvShows.postValue(tvShowList)
-                        _error.postValue(false)
                         EspressoIdlingResource.decrement()
                     }
                 }
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                _error.postValue(true)
                 t.printStackTrace()
             }
         })

@@ -1,6 +1,7 @@
-package com.acsl.moviex.data.source.remote.response
+package com.acsl.moviex.data.source.remote
 
 import com.acsl.moviex.data.source.remote.request.ApiRequest
+import com.acsl.moviex.data.source.remote.response.MovieResponse
 import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.API_KEY
 import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.BASE_URL
 import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.LANGUAGE_PREF
