@@ -3,17 +3,17 @@ package com.acsl.moviex.ui.navigation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.acsl.moviex.data.DataDummy
 import com.acsl.moviex.data.entities.MovieEntity
 import com.acsl.moviex.data.source.DataRepository
+import com.acsl.moviex.util.DataDummy
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -39,18 +39,17 @@ class HomeViewModelTest {
     @Test
     fun getMovies() {
         val dummyMovies = DataDummy.generateDummyMovies()
-        val courses = MutableLiveData<List<MovieEntity>>()
-        courses.value = dummyMovies
+        val movies = MutableLiveData<List<MovieEntity>>()
+        movies.value = dummyMovies
 
-
-        `when`(repository.getAllMovies()).thenReturn(courses)
+        `when`(repository.getAllMovies()).thenReturn(movies)
         val courseEntities = viewModel.getAllMovies().value
-        Mockito.verify<DataRepository>(repository).getAllMovies()
+        verify(repository).getAllMovies()
         Assert.assertNotNull(courseEntities)
         Assert.assertEquals(1, courseEntities?.size)
 
         viewModel.getAllMovies().observeForever(observer)
-        Mockito.verify(observer).onChanged(dummyMovies)
+        verify(observer).onChanged(dummyMovies)
     }
 
     @Test
@@ -62,11 +61,11 @@ class HomeViewModelTest {
 
         `when`(repository.getAllTvShows()).thenReturn(courses)
         val courseEntities = viewModel.getAllTvShows().value
-        Mockito.verify<DataRepository>(repository).getAllTvShows()
+        verify(repository).getAllTvShows()
         Assert.assertNotNull(courseEntities)
         Assert.assertEquals(1, courseEntities?.size)
 
         viewModel.getAllTvShows().observeForever(observer)
-        Mockito.verify(observer).onChanged(dummyTvShows)
+        verify(observer).onChanged(dummyTvShows)
     }
 }

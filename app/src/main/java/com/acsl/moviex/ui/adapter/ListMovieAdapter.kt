@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.MovieEntity
 import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.BASE_IMAGE_URL
+import com.acsl.moviex.util.EspressoIdlingResource
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movie.view.*
 
@@ -39,6 +40,7 @@ class ListMovieAdapter(private val movieList: ArrayList<MovieEntity>, private va
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(movie: MovieEntity, context: Context, itemClicked: () -> Unit) {
             with(itemView) {
+                EspressoIdlingResource.increment()
                 Glide.with(this.context)
                     .load(BASE_IMAGE_URL+movie.posterPath)
                     .into(iv_poster)
@@ -47,8 +49,9 @@ class ListMovieAdapter(private val movieList: ArrayList<MovieEntity>, private va
                     itemClicked.invoke()
                 }
 
-                tv_movie_name.text = movie.originalTitle
+                tv_name.text = movie.originalTitle
                 tv_movie_desc.text = movie.overview
+                EspressoIdlingResource.decrement()
             }
         }
     }

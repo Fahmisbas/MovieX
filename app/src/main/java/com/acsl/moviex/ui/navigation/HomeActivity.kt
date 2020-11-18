@@ -23,35 +23,40 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         observerDataChange()
     }
 
-    override fun onResume() {
-        super.onResume()
-        observerDataChange()
-    }
 
     private fun observerDataChange() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-        viewModel.getAllMovies().observe(this,  { movies ->
-            viewModel.getAllTvShows().observe(this,  { tvShows ->
-                load_viewpager.visibility = View.GONE
-                setupWithViewPager(movies, tvShows)
+        viewModel.getAllMovies().observe(this, { movies ->
+            viewModel.getAllTvShows().observe(this, { tvShows ->
+                if (movies.isNotEmpty() && tvShows.isNotEmpty()) {
+                    load_viewpager.visibility = View.GONE
+                    setupWithViewPager(movies, tvShows)
+                }
             })
         })
     }
 
-    private fun setupWithViewPager(movies : List<MovieEntity>, tvShows : List<MovieEntity>) {
+    private fun setupWithViewPager(movies: List<MovieEntity>, tvShows: List<MovieEntity>) {
         nav.setOnNavigationItemSelectedListener(this)
 
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, movies, tvShows)
         view_pager.adapter = sectionPagerAdapter
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> nav.menu.findItem(R.id.nav_movie).isChecked = true
                     1 -> nav.menu.findItem(R.id.nav_tv_shows).isChecked = true
                 }
             }
+
             override fun onPageScrollStateChanged(state: Int) {}
         })
     }
@@ -69,4 +74,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             else -> false
         }
     }
+
+
 }

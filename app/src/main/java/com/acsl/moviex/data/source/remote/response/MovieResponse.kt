@@ -7,7 +7,11 @@ class MovieResponse(
     var results : List<ResultResponse>
 ) {
     companion object {
-
+        const val API_KEY = "API_KEY"
+        const val BASE_IMAGE_URL = "http://image.tmdb.org/t/p/original"
+        const val LANGUAGE_PREF = "en-US"
+        const val PAGE = "1"
+        const val BASE_URL = "https://api.themoviedb.org/"
     }
 }
 
