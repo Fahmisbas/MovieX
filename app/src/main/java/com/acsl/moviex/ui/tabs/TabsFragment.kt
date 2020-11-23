@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_tabs.*
 
 class TabsFragment(context: Context) : Fragment() {
 
-    private var adapter = ListMovieAdapter(arrayListOf(),context)
+    private var adapter = ListMovieAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

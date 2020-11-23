@@ -1,5 +1,6 @@
 package com.acsl.moviex.data.source.remote.request
 
+import com.acsl.moviex.BuildConfig
 import com.acsl.moviex.data.source.remote.response.MovieResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -19,6 +20,15 @@ interface ApiRequest {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: String
-    ) : Call<MovieResponse>
+    ): Call<MovieResponse>
+
+
+    companion object {
+        const val API_KEY = BuildConfig.ApiKey
+        const val BASE_IMAGE_URL = BuildConfig.BaseImageUrl
+        const val BASE_URL = BuildConfig.BaseUrl
+        const val LANGUAGE_PREF = "en-US"
+        const val PAGE = "1"
+    }
 
 }

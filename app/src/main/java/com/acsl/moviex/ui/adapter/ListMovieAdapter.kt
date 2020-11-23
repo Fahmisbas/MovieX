@@ -1,18 +1,17 @@
 package com.acsl.moviex.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.BASE_IMAGE_URL
+import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_IMAGE_URL
 import com.acsl.moviex.util.EspressoIdlingResource
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class ListMovieAdapter(private val dataList: ArrayList<DataEntity>, private val context: Context) :
+class ListMovieAdapter(private val dataList: ArrayList<DataEntity>) :
     RecyclerView.Adapter<ListMovieAdapter.ViewHolder>() {
 
     var onItemClickCallback: OnItemClickCallback? = null
@@ -33,27 +32,19 @@ class ListMovieAdapter(private val dataList: ArrayList<DataEntity>, private val 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = dataList[position]
-        holder.bind(movie, context) {
+        holder.bind(movie) {
             onItemClickCallback?.onItemClicked(movie)
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(data: DataEntity, context: Context, itemClicked: () -> Unit) {
+        fun bind(data: DataEntity, itemClicked: () -> Unit) {
             with(itemView) {
                 EspressoIdlingResource.increment()
-
-                Glide.with(this.context)
-                    .load(BASE_IMAGE_URL + data.posterPath)
-                    .into(iv_poster)
-
-                setOnClickListener {
-                    itemClicked.invoke()
-                }
-
+                Glide.with(this.context).load(BASE_IMAGE_URL + data.posterPath).into(iv_poster)
+                setOnClickListener { itemClicked.invoke() }
                 tv_movie_name.text = data.originalTitle
                 tv_movie_desc.text = data.overview
-
                 EspressoIdlingResource.decrement()
             }
         }

@@ -1,11 +1,11 @@
 package com.acsl.moviex.data.source.remote
 
 import com.acsl.moviex.data.source.remote.request.ApiRequest
+import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.API_KEY
+import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_URL
+import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.LANGUAGE_PREF
+import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.PAGE
 import com.acsl.moviex.data.source.remote.response.MovieResponse
-import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.API_KEY
-import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.BASE_URL
-import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.LANGUAGE_PREF
-import com.acsl.moviex.data.source.remote.response.MovieResponse.Companion.PAGE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -15,9 +15,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 open class RemoteDataSource {
 
 
-     fun getMoviesRemotely(): Call<MovieResponse> = getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, PAGE)
+    fun getAllMovies(): Call<MovieResponse> =
+        getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, PAGE)
 
-     fun getTvShowsRemotely(): Call<MovieResponse> = getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, PAGE)
+    fun getAllTvShows(): Call<MovieResponse> =
+        getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, PAGE)
 
 
     companion object {

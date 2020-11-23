@@ -11,7 +11,7 @@ import com.acsl.moviex.data.entities.DataEntity
 class SectionPagerAdapter(
     private val context: Context,
     fm: FragmentManager,
-    private var data: List<DataEntity>,
+    private var movies: List<DataEntity>,
     private var tvShow: List<DataEntity>
 ) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -22,14 +22,14 @@ class SectionPagerAdapter(
         R.string.tab_title_tvshow
     )
 
-    override fun getCount() = 2
+    override fun getCount() = tabTitles.size
 
     override fun getItem(position: Int): Fragment {
         when (position) {
-            1 -> return TabsFragment.newInstance(0, data, tvShow, context)
-            2 -> return TabsFragment.newInstance(1, data, tvShow, context)
+            1 -> return TabsFragment.newInstance(0, movies, tvShow, context)
+            2 -> return TabsFragment.newInstance(1, movies, tvShow, context)
         }
-        return TabsFragment.newInstance(1, data, tvShow, context)
+        return TabsFragment.newInstance(1, movies, tvShow, context)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.response.MovieResponse
+import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_IMAGE_URL
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -19,7 +19,7 @@ class DetailActivity : AppCompatActivity() {
             tv_overview.text = it.overview
 
             Glide.with(this)
-                .load(MovieResponse.BASE_IMAGE_URL +data.posterPath)
+                .load(BASE_IMAGE_URL + data.posterPath)
                 .into(img_movie)
         }
     }

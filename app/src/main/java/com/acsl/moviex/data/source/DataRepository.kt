@@ -16,7 +16,7 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
     override fun getAllMovies(): LiveData<List<DataEntity>> {
         EspressoIdlingResource.increment()
         val movies = MutableLiveData<List<DataEntity>>()
-        remoteDataSource.getMoviesRemotely().enqueue(object : Callback<MovieResponse> {
+        remoteDataSource.getAllMovies().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback ->
@@ -47,7 +47,7 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
     override fun getAllTvShows(): LiveData<List<DataEntity>> {
         EspressoIdlingResource.increment()
         val tvShows = MutableLiveData<List<DataEntity>>()
-        remoteDataSource.getTvShowsRemotely().enqueue(object : Callback<MovieResponse> {
+        remoteDataSource.getAllTvShows().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback ->
@@ -83,6 +83,4 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
                 instance ?: DataRepository(remoteData)
             }
     }
-
-
 }

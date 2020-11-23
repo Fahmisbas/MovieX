@@ -20,11 +20,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        observerDataChange()
+        observeDataChange()
     }
 
 
-    private fun observerDataChange() {
+    private fun observeDataChange() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         viewModel.getAllMovies().observe(this, { movies ->
@@ -37,9 +37,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         })
     }
 
-    private fun setupWithViewPager(data: List<DataEntity>, tvShows: List<DataEntity>) {
+    private fun setupWithViewPager(movies: List<DataEntity>, tvShows: List<DataEntity>) {
         nav.setOnNavigationItemSelectedListener(this)
-        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, data, tvShows)
+        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, movies, tvShows)
         view_pager.adapter = sectionPagerAdapter
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
@@ -73,6 +73,4 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             else -> false
         }
     }
-
-
 }

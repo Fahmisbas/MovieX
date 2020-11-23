@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.DataRepository
-import com.acsl.moviex.util.DataDummy
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
