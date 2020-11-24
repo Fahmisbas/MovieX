@@ -15,8 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 open class RemoteDataSource {
 
 
-    fun getAllMovies(): Call<MovieResponse> =
-        getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, PAGE)
+     fun getAllMovies(): Call<MovieResponse> =
+         getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, PAGE)
 
     fun getAllTvShows(): Call<MovieResponse> =
         getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, PAGE)

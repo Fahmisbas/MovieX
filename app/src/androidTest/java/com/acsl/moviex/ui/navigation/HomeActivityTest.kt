@@ -52,6 +52,3 @@ class HomeActivityTest {
         onView(withId(R.id.tv_overview)).check(matches(isDisplayed()))
     }
 }
-
-
-

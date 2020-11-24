@@ -41,7 +41,7 @@ class ListMovieAdapter(private val dataList: ArrayList<DataEntity>) :
         fun bind(data: DataEntity, itemClicked: () -> Unit) {
             with(itemView) {
                 EspressoIdlingResource.increment()
-                Glide.with(this.context).load(BASE_IMAGE_URL + data.posterPath).into(iv_poster)
+                Glide.with(this.context).load(BASE_IMAGE_URL + data.posterPath).into(poster)
                 setOnClickListener { itemClicked.invoke() }
                 tv_movie_name.text = data.originalTitle
                 tv_movie_desc.text = data.overview

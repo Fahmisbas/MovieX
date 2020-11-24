@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.DataRepository
+import com.acsl.moviex.ui.navigation.dummy.DataDummy
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +57,6 @@ class HomeViewModelTest {
         val dummyTvShows = DataDummy.generateDummyTvShows()
         val courses = MutableLiveData<List<DataEntity>>()
         courses.value = dummyTvShows
-
 
         `when`(repository.getAllTvShows()).thenReturn(courses)
         val courseEntities = viewModel.getAllTvShows().value

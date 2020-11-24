@@ -36,7 +36,6 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
                     }
                 }
             }
-
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
             }
