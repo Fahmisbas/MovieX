@@ -47,7 +47,7 @@ class HomeActivityTest {
                 withId(R.id.rv_tabs),
                 isDisplayed()
             )
-        ).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(10, click()))
+        ).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
         onView(withId(R.id.tv_movie_name)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_overview)).check(matches(isDisplayed()))
     }
