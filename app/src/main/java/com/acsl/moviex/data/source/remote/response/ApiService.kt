@@ -16,8 +16,8 @@ open class ApiService {
     fun getAllMovies(page: Int): Call<MovieResponse> =
         getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, page)
 
-    fun getAllTvShows(): Call<MovieResponse> =
-        getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, 1)
+    fun getAllTvShows(page: Int): Call<MovieResponse> =
+        getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, page)
 
 
     companion object {

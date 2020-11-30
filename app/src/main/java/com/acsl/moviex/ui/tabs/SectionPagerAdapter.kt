@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.paging.PagedList
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
+import com.acsl.moviex.ui.tabs.favorite.FavoriteFragment
 import com.acsl.moviex.vo.NetworkState
 
 class SectionPagerAdapter(
@@ -21,7 +22,9 @@ class SectionPagerAdapter(
 
     @StringRes
     private val tabTitles = intArrayOf(
-        R.string.tab_title_movie
+        R.string.tab_title_movie,
+        R.string.tab_title_tvshow,
+        R.string.tab_title_favorite
     )
 
     override fun getCount() = tabTitles.size
@@ -30,7 +33,8 @@ class SectionPagerAdapter(
         when (position) {
             0 -> return TabsFragment.newInstance(0, movies, networkState)
             1 -> return TabsFragment.newInstance(1, movies, networkState)
-            2 -> return TabsFragment.newInstance(2, movies, networkState)
+            2 -> return FavoriteFragment.newInstance(tvShow)
+
         }
         return TabsFragment.newInstance(0, movies, networkState)
     }

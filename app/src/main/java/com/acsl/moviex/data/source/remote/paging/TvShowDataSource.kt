@@ -11,10 +11,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<Int, DataEntity>() {
+class TvShowDataSource(private val apiService: ApiService) :
+    PageKeyedDataSource<Int, DataEntity>() {
 
     private var page = 1
-
     val networkState: MutableLiveData<NetworkState> = MutableLiveData()
 
     override fun loadInitial(
@@ -24,23 +24,23 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
         EspressoIdlingResource.increment()
 
         networkState.postValue(NetworkState.running())
-        apiService.getAllMovies(page).enqueue(object : Callback<MovieResponse> {
+        apiService.getAllTvShows(page).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { networkCallback ->
-                        val moviesList = arrayListOf<DataEntity>()
+                        val tvShowList = arrayListOf<DataEntity>()
                         for (result in networkCallback.results) {
-                            moviesList.add(
+                            tvShowList.add(
                                 DataEntity(
                                     result.posterPath,
                                     result.id,
-                                    result.originalTitle,
+                                    result.originalName,
                                     false,
                                     result.overview
                                 )
                             )
                         }
-                        callback.onResult(moviesList, null, page + 1)
+                        callback.onResult(tvShowList, null, page + 1)
                         networkState.postValue(NetworkState.success())
                     }
                 }
@@ -58,27 +58,25 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
         EspressoIdlingResource.increment()
 
         networkState.postValue(NetworkState.running())
-        apiService.getAllMovies(params.key).enqueue(object : Callback<MovieResponse> {
+        apiService.getAllTvShows(params.key).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { networkCallback ->
-                        val moviesList = arrayListOf<DataEntity>()
+                        val tvShowList = arrayListOf<DataEntity>()
                         for (result in networkCallback.results) {
-                            moviesList.add(
+                            tvShowList.add(
                                 DataEntity(
                                     result.posterPath,
                                     result.id,
-                                    result.originalTitle,
+                                    result.originalName,
                                     false,
                                     result.overview
                                 )
                             )
                         }
-
                         if (networkCallback.totalPage >= params.key) {
-                            callback.onResult(moviesList, params.key + 1)
+                            callback.onResult(tvShowList, params.key + 1)
                             networkState.postValue(NetworkState.success())
-
                         } else {
                             networkState.postValue(NetworkState.reachedBottomList())
                         }
@@ -92,6 +90,7 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
             }
         })
         EspressoIdlingResource.decrement()
+
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DataEntity>) {}

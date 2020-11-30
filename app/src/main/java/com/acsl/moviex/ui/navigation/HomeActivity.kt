@@ -1,7 +1,6 @@
 package com.acsl.moviex.ui.navigation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -43,8 +42,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         viewModel.moviePagedList.observe(this, { movies ->
             viewModel.getAllTvShows().observe(this, { tvShows ->
                 if (movies.isNotEmpty() && tvShows.isNotEmpty()) {
-                    Log.i("moviess", movies[3]?.originalTitle.toString())
                     setupWithViewPager(movies, tvShows)
+
                 } else {
                     failedView()
                 }

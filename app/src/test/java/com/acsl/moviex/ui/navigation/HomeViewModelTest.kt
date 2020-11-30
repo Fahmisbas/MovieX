@@ -43,12 +43,12 @@ class HomeViewModelTest {
         movies.value = dummyMovies
 
         `when`(repository.getAllMovies()).thenReturn(movies)
-        val courseEntities = viewModel.getAllMovies().value
+        val courseEntities = viewModel.moviePagedList.value
         verify(repository).getAllMovies()
         Assert.assertNotNull(courseEntities)
         Assert.assertEquals(1, courseEntities?.size)
 
-        viewModel.getAllMovies().observeForever(observer)
+        viewModel.moviePagedList.observeForever(observer)
         verify(observer).onChanged(dummyMovies)
     }
 

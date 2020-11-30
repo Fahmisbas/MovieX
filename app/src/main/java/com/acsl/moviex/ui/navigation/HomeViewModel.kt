@@ -13,8 +13,6 @@ class HomeViewModel(private val repository: DataRepository) : ViewModel() {
         repository.getAllMovies()
     }
 
-    fun getAllMovies() = repository.getAllMovies()
-
     fun getAllTvShows() = repository.getAllTvShows()
 
     fun getNetworkState() = repository.getNetworkState()

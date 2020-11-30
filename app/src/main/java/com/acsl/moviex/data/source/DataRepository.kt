@@ -20,7 +20,6 @@ open class DataRepository(private val apiService: ApiService) : DataSource {
 
     lateinit var moviesDataSourceFactory: MovieDataSourceFactory
 
-
     override fun getAllMovies(): LiveData<PagedList<DataEntity>> {
         moviesDataSourceFactory = MovieDataSourceFactory(apiService)
         val config = PagedList.Config.Builder()
@@ -40,7 +39,7 @@ open class DataRepository(private val apiService: ApiService) : DataSource {
     override fun getAllTvShows(): LiveData<List<DataEntity>> {
         EspressoIdlingResource.increment()
         val tvShows = MutableLiveData<List<DataEntity>>()
-        apiService.getAllTvShows().enqueue(object : Callback<MovieResponse> {
+        apiService.getAllTvShows(1).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback ->

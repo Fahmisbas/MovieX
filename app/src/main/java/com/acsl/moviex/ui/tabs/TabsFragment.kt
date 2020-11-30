@@ -46,6 +46,9 @@ class TabsFragment(
     private fun setList(index: Int) {
         if (index == 0) {
             updateList(listData)
+        } else {
+            updateList(listData)
+
         }
     }
 

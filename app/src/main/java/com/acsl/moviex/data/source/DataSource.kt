@@ -10,4 +10,5 @@ interface DataSource {
     fun getAllMovies(): LiveData<PagedList<DataEntity>>
 
     fun getAllTvShows(): LiveData<List<DataEntity>>
+
 }
