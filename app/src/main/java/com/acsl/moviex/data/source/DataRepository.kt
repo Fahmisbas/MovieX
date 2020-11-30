@@ -2,51 +2,45 @@ package com.acsl.moviex.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.RemoteDataSource
+import com.acsl.moviex.data.source.remote.paging.MovieDataSource
+import com.acsl.moviex.data.source.remote.response.ApiService
 import com.acsl.moviex.data.source.remote.response.MovieResponse
+import com.acsl.moviex.factory.MovieDataSourceFactory
 import com.acsl.moviex.util.EspressoIdlingResource
+import com.acsl.moviex.vo.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class DataRepository(private val remoteDataSource: RemoteDataSource) : DataSource {
+open class DataRepository(private val apiService: ApiService) : DataSource {
+
+    lateinit var moviesDataSourceFactory: MovieDataSourceFactory
 
 
-    override fun getAllMovies(): LiveData<List<DataEntity>> {
-        EspressoIdlingResource.increment()
-        val movies = MutableLiveData<List<DataEntity>>()
-        remoteDataSource.getAllMovies().enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { callback ->
-                        val moviesList = arrayListOf<DataEntity>()
-                        for (result in callback.results) {
-                            moviesList.add(
-                                DataEntity(
-                                    result.posterPath,
-                                    result.id,
-                                    result.originalTitle,
-                                    result.overview
-                                )
-                            )
-                        }
-                        movies.postValue(moviesList)
-                        EspressoIdlingResource.decrement()
-                    }
-                }
-            }
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
-        return movies
+    override fun getAllMovies(): LiveData<PagedList<DataEntity>> {
+        moviesDataSourceFactory = MovieDataSourceFactory(apiService)
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPageSize(20)
+            .build()
+
+        return LivePagedListBuilder(moviesDataSourceFactory, config).build()
+    }
+
+    fun getNetworkState(): LiveData<NetworkState> {
+        return Transformations.switchMap<MovieDataSource, NetworkState>(
+            moviesDataSourceFactory.movieLiveDataSource, MovieDataSource::networkState
+        )
     }
 
     override fun getAllTvShows(): LiveData<List<DataEntity>> {
         EspressoIdlingResource.increment()
         val tvShows = MutableLiveData<List<DataEntity>>()
-        remoteDataSource.getAllTvShows().enqueue(object : Callback<MovieResponse> {
+        apiService.getAllTvShows().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback ->
@@ -57,6 +51,7 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
                                     result.posterPath,
                                     result.id,
                                     result.originalName,
+                                    false,
                                     result.overview
                                 )
                             )
@@ -77,9 +72,10 @@ open class DataRepository(private val remoteDataSource: RemoteDataSource) : Data
     companion object {
         @Volatile
         private var instance: DataRepository? = null
-        fun getInstance(remoteData: RemoteDataSource): DataRepository =
+        fun getInstance(remoteData: ApiService): DataRepository =
             instance ?: synchronized(this) {
                 instance ?: DataRepository(remoteData)
             }
     }
+
 }

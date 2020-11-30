@@ -1,22 +1,26 @@
 package com.acsl.moviex.ui.tabs
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.paging.PagedList
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.ui.adapter.ListMovieAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
 import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_MOVIE_DETAIL
+import com.acsl.moviex.vo.NetworkState
 import kotlinx.android.synthetic.main.fragment_tabs.*
 
-class TabsFragment(context: Context) : Fragment() {
+class TabsFragment(
+    private var listData: PagedList<DataEntity>,
+) : Fragment() {
 
-    private var adapter = ListMovieAdapter(arrayListOf())
+    private var adapter = ListMovieAdapter()
+    private lateinit var netState: NetworkState
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,32 +34,27 @@ class TabsFragment(context: Context) : Fragment() {
 
         rv_tabs.adapter = adapter
 
-        var index = 1
+        var index = 0
         if (arguments != null) {
             index = arguments?.getInt(SECTION_NUMBER, 0) as Int
+            netState = arguments?.getParcelable<NetworkState>(NETWORK_STATE) as NetworkState
         }
         setList(index)
 
     }
 
     private fun setList(index: Int) {
-        if (index == 1) {
-            arguments?.getParcelableArrayList<DataEntity>(MOVIES)?.let {
-                updateList(it)
-            }
-        } else {
-            arguments?.getParcelableArrayList<DataEntity>(TV_SHOWS)?.let {
-                updateList(it)
-            }
+        if (index == 0) {
+            updateList(listData)
         }
     }
 
-    private fun updateList(list: ArrayList<DataEntity>) {
-        adapter.updateList(list) { isNotEmpty ->
-            if (isNotEmpty) {
-                onItemClicked()
-            }
-        }
+    private fun updateList(list: PagedList<DataEntity>) {
+        adapter.submitList(list)
+        adapter.notifyDataSetChanged()
+        adapter.setNetworkState(netState)
+        onItemClicked()
+
     }
 
     private fun onItemClicked() {
@@ -71,22 +70,18 @@ class TabsFragment(context: Context) : Fragment() {
 
     companion object {
         private const val SECTION_NUMBER = "section_number"
-        private const val MOVIES = "user_following"
-        private const val TV_SHOWS = "user_followers"
+        private const val NETWORK_STATE = "network_state"
+
 
         fun newInstance(
             index: Int,
-            data: List<DataEntity>,
-            tvShows: List<DataEntity>,
-            context: Context
+            listData: PagedList<DataEntity>,
+            networkState: NetworkState
         ): TabsFragment {
-            val fragment = TabsFragment(context)
+            val fragment = TabsFragment(listData)
             val bundle = Bundle()
-
-            bundle.putParcelableArrayList(MOVIES, data as ArrayList<DataEntity>)
-            bundle.putParcelableArrayList(TV_SHOWS, tvShows as ArrayList<DataEntity>)
+            bundle.putParcelable(NETWORK_STATE, networkState)
             bundle.putInt(SECTION_NUMBER, index)
-
             fragment.arguments = bundle
             return fragment
         }

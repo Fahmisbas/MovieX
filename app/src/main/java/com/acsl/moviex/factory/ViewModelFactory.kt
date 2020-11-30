@@ -1,4 +1,4 @@
-package com.acsl.moviex.viewmodel
+package com.acsl.moviex.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

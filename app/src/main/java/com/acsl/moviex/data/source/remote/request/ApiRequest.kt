@@ -12,23 +12,20 @@ interface ApiRequest {
     fun getAllMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-        @Query("page") page: String
+        @Query("page") page: Int
     ): Call<MovieResponse>
 
     @GET("3/tv/popular")
     fun getAllTvShows(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-        @Query("page") page: String
+        @Query("page") page: Int
     ): Call<MovieResponse>
-
 
     companion object {
         const val API_KEY = BuildConfig.ApiKey
         const val BASE_IMAGE_URL = BuildConfig.BaseImageUrl
         const val BASE_URL = BuildConfig.BaseUrl
         const val LANGUAGE_PREF = "en-US"
-        const val PAGE = "1"
     }
-
 }

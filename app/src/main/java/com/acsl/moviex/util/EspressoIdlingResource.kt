@@ -16,5 +16,4 @@ object EspressoIdlingResource {
             espressoTestIdResource.decrement()
         }
     }
-
 }

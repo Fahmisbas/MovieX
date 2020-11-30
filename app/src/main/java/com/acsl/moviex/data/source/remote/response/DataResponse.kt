@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 class MovieResponse(
 
+    @SerializedName("page")
+    var page: Int,
+    @SerializedName("total_pages")
+    var totalPage: Int,
     @SerializedName("results")
     var results: List<ResultResponse>
 )

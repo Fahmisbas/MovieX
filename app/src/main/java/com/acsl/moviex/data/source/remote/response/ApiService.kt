@@ -1,34 +1,32 @@
-package com.acsl.moviex.data.source.remote
+package com.acsl.moviex.data.source.remote.response
 
 import com.acsl.moviex.data.source.remote.request.ApiRequest
 import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.API_KEY
 import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_URL
 import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.LANGUAGE_PREF
-import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.PAGE
-import com.acsl.moviex.data.source.remote.response.MovieResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-open class RemoteDataSource {
+open class ApiService {
 
 
-     fun getAllMovies(): Call<MovieResponse> =
-         getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, PAGE)
+    fun getAllMovies(page: Int): Call<MovieResponse> =
+        getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, page)
 
     fun getAllTvShows(): Call<MovieResponse> =
-        getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, PAGE)
+        getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, 1)
 
 
     companion object {
         @Volatile
-        private var instance: RemoteDataSource? = null
+        private var instance: ApiService? = null
 
-        fun getInstance(): RemoteDataSource =
+        fun getInstance(): ApiService =
             instance ?: synchronized(this) {
-                instance ?: RemoteDataSource()
+                instance ?: ApiService()
             }
 
         fun getApiService(): ApiRequest {
