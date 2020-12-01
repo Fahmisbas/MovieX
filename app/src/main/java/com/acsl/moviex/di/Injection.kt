@@ -1,11 +1,11 @@
 package com.acsl.moviex.di
 
-import com.acsl.moviex.data.source.DataRepository
+import com.acsl.moviex.data.source.AppDataRepository
 import com.acsl.moviex.data.source.remote.response.ApiService
 
 object Injection {
-    fun provideRepository(): DataRepository {
+    fun provideRepository(): AppDataRepository {
         val remoteDataSource = ApiService.getInstance()
-        return DataRepository.getInstance(remoteDataSource)
+        return AppDataRepository.getInstance(remoteDataSource)
     }
 }

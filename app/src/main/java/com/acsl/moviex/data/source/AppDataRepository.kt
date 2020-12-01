@@ -5,24 +5,26 @@ import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.paging.MovieDataSource
-import com.acsl.moviex.data.source.remote.paging.TvShowDataSource
 import com.acsl.moviex.data.source.remote.response.ApiService
 import com.acsl.moviex.factory.MovieDataSourceFactory
 import com.acsl.moviex.factory.TvShowDataSourceFactory
+import com.acsl.moviex.ui.tabs.movie.MovieDataSource
+import com.acsl.moviex.ui.tabs.tvshow.TvShowDataSource
 import com.acsl.moviex.vo.NetworkState
 
-open class DataRepository(private val apiService: ApiService) : DataSource {
+open class AppDataRepository(private val apiService: ApiService) : DataSource {
 
     var moviesDataSourceFactory: MovieDataSourceFactory = MovieDataSourceFactory(apiService)
     var tvShowDataSourceFactory: TvShowDataSourceFactory = TvShowDataSourceFactory(apiService)
 
-    override fun getAllMovies(): LiveData<PagedList<DataEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setPageSize(20)
-            .build()
+    private val config = PagedList.Config.Builder()
+        .setEnablePlaceholders(false)
+        .setPageSize(5)
+        .setInitialLoadSizeHint(10)
+        .build()
 
+
+    override fun getAllMovies(): LiveData<PagedList<DataEntity>> {
         return LivePagedListBuilder(moviesDataSourceFactory, config).build()
     }
 
@@ -32,13 +34,7 @@ open class DataRepository(private val apiService: ApiService) : DataSource {
         )
     }
 
-
     override fun getAllTvShows(): LiveData<PagedList<DataEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setPageSize(20)
-            .build()
-
         return LivePagedListBuilder(tvShowDataSourceFactory, config).build()
     }
 
@@ -50,10 +46,10 @@ open class DataRepository(private val apiService: ApiService) : DataSource {
 
     companion object {
         @Volatile
-        private var instance: DataRepository? = null
-        fun getInstance(remoteData: ApiService): DataRepository =
+        private var instance: AppDataRepository? = null
+        fun getInstance(remoteData: ApiService): AppDataRepository =
             instance ?: synchronized(this) {
-                instance ?: DataRepository(remoteData)
+                instance ?: AppDataRepository(remoteData)
             }
     }
 

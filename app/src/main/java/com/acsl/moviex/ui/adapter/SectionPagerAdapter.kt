@@ -1,23 +1,20 @@
-package com.acsl.moviex.ui.tabs
+package com.acsl.moviex.ui.adapter
 
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.paging.PagedList
 import com.acsl.moviex.R
-import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.vo.NetworkState
+import com.acsl.moviex.ui.tabs.favorite.FavoriteFragment
+import com.acsl.moviex.ui.tabs.movie.MovieFragment
+import com.acsl.moviex.ui.tabs.tvshow.TvShowFragment
 
 class SectionPagerAdapter(
     private val context: Context,
     fm: FragmentManager,
-    private var movies: PagedList<DataEntity>,
-    private var tvShow: PagedList<DataEntity>,
-    private var networkState: NetworkState,
-    private var tvNetworkState: NetworkState
-) :
+
+    ) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes
@@ -31,9 +28,9 @@ class SectionPagerAdapter(
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> TabsFragment.newInstance(movies, networkState)
-            1 -> TabsFragment.newInstance(tvShow, networkState)
-            else -> TabsFragment.newInstance(tvShow, networkState)
+            0 -> MovieFragment.newInstance()
+            1 -> TvShowFragment.newInstance()
+            else -> FavoriteFragment.newInstance()
         }
     }
 

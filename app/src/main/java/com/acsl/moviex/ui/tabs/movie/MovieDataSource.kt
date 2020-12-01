@@ -1,4 +1,4 @@
-package com.acsl.moviex.data.source.remote.paging
+package com.acsl.moviex.ui.tabs.movie
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
@@ -11,10 +11,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TvShowDataSource(private val apiService: ApiService) :
-    PageKeyedDataSource<Int, DataEntity>() {
+class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<Int, DataEntity>() {
 
     private var page = 1
+
     val networkState: MutableLiveData<NetworkState> = MutableLiveData()
 
     override fun loadInitial(
@@ -24,23 +24,23 @@ class TvShowDataSource(private val apiService: ApiService) :
         EspressoIdlingResource.increment()
 
         networkState.postValue(NetworkState.running())
-        apiService.getAllTvShows(page).enqueue(object : Callback<MovieResponse> {
+        apiService.getAllMovies(page).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { networkCallback ->
-                        val tvShowList = arrayListOf<DataEntity>()
+                        val moviesList = arrayListOf<DataEntity>()
                         for (result in networkCallback.results) {
-                            tvShowList.add(
+                            moviesList.add(
                                 DataEntity(
                                     result.posterPath,
                                     result.id,
-                                    result.originalName,
+                                    result.originalTitle,
                                     false,
                                     result.overview
                                 )
                             )
                         }
-                        callback.onResult(tvShowList, null, page + 1)
+                        callback.onResult(moviesList, null, page + 1)
                         networkState.postValue(NetworkState.success())
                     }
                 }
@@ -58,25 +58,27 @@ class TvShowDataSource(private val apiService: ApiService) :
         EspressoIdlingResource.increment()
 
         networkState.postValue(NetworkState.running())
-        apiService.getAllTvShows(params.key).enqueue(object : Callback<MovieResponse> {
+        apiService.getAllMovies(params.key).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { networkCallback ->
-                        val tvShowList = arrayListOf<DataEntity>()
+                        val moviesList = arrayListOf<DataEntity>()
                         for (result in networkCallback.results) {
-                            tvShowList.add(
+                            moviesList.add(
                                 DataEntity(
                                     result.posterPath,
                                     result.id,
-                                    result.originalName,
+                                    result.originalTitle,
                                     false,
                                     result.overview
                                 )
                             )
                         }
+
                         if (networkCallback.totalPage >= params.key) {
-                            callback.onResult(tvShowList, params.key + 1)
+                            callback.onResult(moviesList, params.key + 1)
                             networkState.postValue(NetworkState.success())
+
                         } else {
                             networkState.postValue(NetworkState.reachedBottomList())
                         }
@@ -90,7 +92,6 @@ class TvShowDataSource(private val apiService: ApiService) :
             }
         })
         EspressoIdlingResource.decrement()
-
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DataEntity>) {}

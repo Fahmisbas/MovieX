@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.DataRepository
+import com.acsl.moviex.data.source.AppDataRepository
 import com.acsl.moviex.ui.navigation.dummy.DataDummy
 import org.junit.Assert
 import org.junit.Before
@@ -26,7 +26,7 @@ class HomeViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var repository : DataRepository
+    private lateinit var repository: AppDataRepository
 
     @Mock
     private lateinit var observer: Observer<List<DataEntity>>
@@ -46,7 +46,7 @@ class HomeViewModelTest {
         val courseEntities = viewModel.moviePagedList.value
         verify(repository).getAllMovies()
         Assert.assertNotNull(courseEntities)
-        Assert.assertEquals(1, courseEntities?.size)
+        Assert.assertEquals(1, courseEntities.size)
 
         viewModel.moviePagedList.observeForever(observer)
         verify(observer).onChanged(dummyMovies)
@@ -62,7 +62,7 @@ class HomeViewModelTest {
         val courseEntities = viewModel.getAllTvShows().value
         verify(repository).getAllTvShows()
         Assert.assertNotNull(courseEntities)
-        Assert.assertEquals(1, courseEntities?.size)
+        Assert.assertEquals(1, courseEntities.size)
 
         viewModel.getAllTvShows().observeForever(observer)
         verify(observer).onChanged(dummyTvShows)

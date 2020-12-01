@@ -3,82 +3,30 @@ package com.acsl.moviex.ui.navigation
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.viewpager.widget.ViewPager
 import com.acsl.moviex.R
-import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.factory.ViewModelFactory
-import com.acsl.moviex.ui.tabs.SectionPagerAdapter
-import com.acsl.moviex.util.gone
-import com.acsl.moviex.util.visible
-import com.acsl.moviex.vo.NetworkState
-import com.acsl.moviex.vo.Status
+import com.acsl.moviex.ui.adapter.SectionPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var viewModel: HomeViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        observeDataChange()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        observeDataChange()
-
-    }
-
-    private fun observeDataChange() {
-        val factory = ViewModelFactory.getInstance()
-        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-        viewModel.moviePagedList.observe(this, { movies ->
-            viewModel.tvShowPagedList.observe(this, { tvShows ->
-                viewModel.getMovieNetworkState().observe(this, { netStateMovie ->
-                    viewModel.getTvNetworkState().observe(this, { netStateTv ->
-                        updateUi(netStateMovie, netStateTv)
-                        if (movies.isNotEmpty() && tvShows.isNotEmpty()) {
-                            setupWithViewPager(movies, tvShows, netStateMovie, netStateTv)
-                        }
-
-                    })
-                })
-            })
-        })
-    }
-
-    private fun updateUi(netStateMovie: NetworkState, netStateTvShow: NetworkState) {
-        if (netStateMovie.status == Status.RUNNING && netStateTvShow.status == Status.RUNNING) {
-            if (viewModel.movieListIsEmpty()) {
-                runningView()
-            }
-        } else if (netStateMovie.status == Status.SUCCESS && netStateTvShow.status == Status.SUCCESS) {
-            successView()
-        } else if (netStateMovie.status == Status.FAIL && netStateTvShow.status == Status.FAIL) {
-            if (viewModel.movieListIsEmpty()) {
-                failedView()
-            }
-        }
+        setupViewPager()
     }
 
 
-    private fun setupWithViewPager(
-        movies: PagedList<DataEntity>,
-        tvShows: PagedList<DataEntity>,
-        networkStateMovi: NetworkState,
-        networkStateTv: NetworkState
+    private fun setupViewPager(
     ) {
         nav.setOnNavigationItemSelectedListener(this)
         val sectionPagerAdapter =
             SectionPagerAdapter(
-                this, supportFragmentManager, movies, tvShows, networkStateMovi, networkStateTv
+                this, supportFragmentManager
             )
         view_pager.adapter = sectionPagerAdapter
 
@@ -95,7 +43,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 when (position) {
                     0 -> nav.menu.findItem(R.id.nav_movie).isChecked = true
                     1 -> nav.menu.findItem(R.id.nav_tv_shows).isChecked = true
-                    2 -> nav.menu.findItem(R.id.nav_favorites).isChecked = true
+                    else -> nav.menu.findItem(R.id.nav_favorites).isChecked = true
                 }
             }
 
@@ -120,23 +68,5 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             else -> false
         }
-    }
-
-    private fun runningView() {
-        load_viewpager.visible()
-        img_error.gone()
-        tv_error.gone()
-    }
-
-    private fun successView() {
-        load_viewpager.gone()
-        img_error.gone()
-        tv_error.gone()
-    }
-
-    private fun failedView() {
-        load_viewpager.gone()
-        img_error.visible()
-        tv_error.visible()
     }
 }

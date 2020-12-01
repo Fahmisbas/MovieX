@@ -3,30 +3,17 @@ package com.acsl.moviex.ui.navigation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
-import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.DataRepository
+import com.acsl.moviex.data.source.AppDataRepository
+import com.acsl.moviex.vo.NetworkState
 
-class HomeViewModel(private val repository: DataRepository) : ViewModel() {
+class HomeViewModel(private val repository: AppDataRepository) : ViewModel() {
 
-    val moviePagedList: LiveData<PagedList<DataEntity>> by lazy {
-        repository.getAllMovies()
+    val movieNetworkState: LiveData<NetworkState> by lazy {
+        repository.getMovieNetworkState()
     }
 
-    val tvShowPagedList: LiveData<PagedList<DataEntity>> by lazy {
-        repository.getAllTvShows()
-    }
-
-    fun getMovieNetworkState() = repository.getMovieNetworkState()
-
-    fun getTvNetworkState() = repository.getTvNetworkState()
-
-    fun movieListIsEmpty(): Boolean {
-        return moviePagedList.value?.isEmpty() ?: true
-    }
-
-    fun tvListIsEmpty(): Boolean {
-        return tvShowPagedList.value?.isEmpty() ?: true
+    val tvNetworkState: LiveData<NetworkState> by lazy {
+        repository.getTvNetworkState()
     }
 
 }

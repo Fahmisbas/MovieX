@@ -3,8 +3,8 @@ package com.acsl.moviex.factory
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.paging.MovieDataSource
 import com.acsl.moviex.data.source.remote.response.ApiService
+import com.acsl.moviex.ui.tabs.movie.MovieDataSource
 
 class MovieDataSourceFactory(private val apiService: ApiService) :
     DataSource.Factory<Int, DataEntity>() {
