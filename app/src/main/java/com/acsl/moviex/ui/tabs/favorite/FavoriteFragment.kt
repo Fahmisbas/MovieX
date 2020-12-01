@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.ui.adapter.OrdinaryAdapter
-import kotlinx.android.synthetic.main.fragment_tabs.*
+import kotlinx.android.synthetic.main.fragment_favorite.*
 
 
 class FavoriteFragment : Fragment() {
@@ -31,13 +31,11 @@ class FavoriteFragment : Fragment() {
                 adapter.updateList(index)
             }
         }
-
     }
 
 
     companion object {
         private const val EXTRA_TV_SHOWS = "section_number"
-
 
         fun newInstance(
             tvShows: List<DataEntity>,

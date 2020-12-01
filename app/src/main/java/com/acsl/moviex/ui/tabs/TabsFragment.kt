@@ -13,7 +13,7 @@ import com.acsl.moviex.ui.adapter.ListMovieAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
 import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_MOVIE_DETAIL
 import com.acsl.moviex.vo.NetworkState
-import kotlinx.android.synthetic.main.fragment_tabs.*
+import kotlinx.android.synthetic.main.fragment_movie.*
 
 class TabsFragment(
     private var listData: PagedList<DataEntity>,
@@ -26,7 +26,7 @@ class TabsFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tabs, container, false)
+        return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,30 +34,20 @@ class TabsFragment(
 
         rv_tabs.adapter = adapter
 
-        var index = 0
         if (arguments != null) {
-            index = arguments?.getInt(SECTION_NUMBER, 0) as Int
             netState = arguments?.getParcelable<NetworkState>(NETWORK_STATE) as NetworkState
         }
-        setList(index)
 
+        updateList()
     }
 
-    private fun setList(index: Int) {
-        if (index == 0) {
-            updateList(listData)
-        } else {
-            updateList(listData)
-
+    private fun updateList() {
+        if (listData.isNotEmpty()) {
+            adapter.submitList(listData)
+            adapter.setNetworkState(netState)
+            adapter.notifyDataSetChanged()
+            onItemClicked()
         }
-    }
-
-    private fun updateList(list: PagedList<DataEntity>) {
-        adapter.submitList(list)
-        adapter.notifyDataSetChanged()
-        adapter.setNetworkState(netState)
-        onItemClicked()
-
     }
 
     private fun onItemClicked() {
@@ -72,19 +62,15 @@ class TabsFragment(
     }
 
     companion object {
-        private const val SECTION_NUMBER = "section_number"
         private const val NETWORK_STATE = "network_state"
 
-
         fun newInstance(
-            index: Int,
             listData: PagedList<DataEntity>,
             networkState: NetworkState
         ): TabsFragment {
             val fragment = TabsFragment(listData)
             val bundle = Bundle()
             bundle.putParcelable(NETWORK_STATE, networkState)
-            bundle.putInt(SECTION_NUMBER, index)
             fragment.arguments = bundle
             return fragment
         }

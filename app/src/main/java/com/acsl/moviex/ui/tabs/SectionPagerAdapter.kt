@@ -8,15 +8,15 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.paging.PagedList
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.ui.tabs.favorite.FavoriteFragment
 import com.acsl.moviex.vo.NetworkState
 
 class SectionPagerAdapter(
     private val context: Context,
     fm: FragmentManager,
     private var movies: PagedList<DataEntity>,
-    private var tvShow: List<DataEntity>,
-    private var networkState: NetworkState
+    private var tvShow: PagedList<DataEntity>,
+    private var networkState: NetworkState,
+    private var tvNetworkState: NetworkState
 ) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -30,13 +30,11 @@ class SectionPagerAdapter(
     override fun getCount() = tabTitles.size
 
     override fun getItem(position: Int): Fragment {
-        when (position) {
-            0 -> return TabsFragment.newInstance(0, movies, networkState)
-            1 -> return TabsFragment.newInstance(1, movies, networkState)
-            2 -> return FavoriteFragment.newInstance(tvShow)
-
+        return when (position) {
+            0 -> TabsFragment.newInstance(movies, networkState)
+            1 -> TabsFragment.newInstance(tvShow, networkState)
+            else -> TabsFragment.newInstance(tvShow, networkState)
         }
-        return TabsFragment.newInstance(0, movies, networkState)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

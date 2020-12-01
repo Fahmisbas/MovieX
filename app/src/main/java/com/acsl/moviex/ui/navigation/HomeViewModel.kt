@@ -13,12 +13,20 @@ class HomeViewModel(private val repository: DataRepository) : ViewModel() {
         repository.getAllMovies()
     }
 
-    fun getAllTvShows() = repository.getAllTvShows()
+    val tvShowPagedList: LiveData<PagedList<DataEntity>> by lazy {
+        repository.getAllTvShows()
+    }
 
-    fun getNetworkState() = repository.getNetworkState()
+    fun getMovieNetworkState() = repository.getMovieNetworkState()
 
-    fun listIsEmpty(): Boolean {
+    fun getTvNetworkState() = repository.getTvNetworkState()
+
+    fun movieListIsEmpty(): Boolean {
         return moviePagedList.value?.isEmpty() ?: true
+    }
+
+    fun tvListIsEmpty(): Boolean {
+        return tvShowPagedList.value?.isEmpty() ?: true
     }
 
 }

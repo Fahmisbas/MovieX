@@ -21,67 +21,65 @@ import kotlinx.android.synthetic.main.activity_main.*
 class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var networkState: NetworkState
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         observeDataChange()
-        observeNetworkState()
     }
 
     override fun onResume() {
         super.onResume()
         observeDataChange()
-        observeNetworkState()
+
     }
 
     private fun observeDataChange() {
         val factory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         viewModel.moviePagedList.observe(this, { movies ->
-            viewModel.getAllTvShows().observe(this, { tvShows ->
-                if (movies.isNotEmpty() && tvShows.isNotEmpty()) {
-                    setupWithViewPager(movies, tvShows)
+            viewModel.tvShowPagedList.observe(this, { tvShows ->
+                viewModel.getMovieNetworkState().observe(this, { netStateMovie ->
+                    viewModel.getTvNetworkState().observe(this, { netStateTv ->
+                        updateUi(netStateMovie, netStateTv)
+                        if (movies.isNotEmpty() && tvShows.isNotEmpty()) {
+                            setupWithViewPager(movies, tvShows, netStateMovie, netStateTv)
+                        }
 
-                } else {
-                    failedView()
-                }
+                    })
+                })
             })
         })
     }
 
-    private fun observeNetworkState() {
-        viewModel.getNetworkState().observe(this, { netState ->
-            when (netState.status) {
-                Status.RUNNING -> {
-                    if (viewModel.listIsEmpty()) {
-                        runningView()
-                    }
-                }
-                Status.SUCCESS -> {
-                    successView()
-                }
-                Status.FAIL -> {
-                    if (viewModel.listIsEmpty()) {
-                        failedView()
-                    }
-                }
+    private fun updateUi(netStateMovie: NetworkState, netStateTvShow: NetworkState) {
+        if (netStateMovie.status == Status.RUNNING && netStateTvShow.status == Status.RUNNING) {
+            if (viewModel.movieListIsEmpty()) {
+                runningView()
             }
-            if (!viewModel.listIsEmpty()) {
-                networkState = netState
+        } else if (netStateMovie.status == Status.SUCCESS && netStateTvShow.status == Status.SUCCESS) {
+            successView()
+        } else if (netStateMovie.status == Status.FAIL && netStateTvShow.status == Status.FAIL) {
+            if (viewModel.movieListIsEmpty()) {
+                failedView()
             }
-        })
+        }
     }
 
 
     private fun setupWithViewPager(
         movies: PagedList<DataEntity>,
-        tvShows: List<DataEntity>,
+        tvShows: PagedList<DataEntity>,
+        networkStateMovi: NetworkState,
+        networkStateTv: NetworkState
     ) {
         nav.setOnNavigationItemSelectedListener(this)
         val sectionPagerAdapter =
-            SectionPagerAdapter(this, supportFragmentManager, movies, tvShows, networkState)
+            SectionPagerAdapter(
+                this, supportFragmentManager, movies, tvShows, networkStateMovi, networkStateTv
+            )
         view_pager.adapter = sectionPagerAdapter
 
 

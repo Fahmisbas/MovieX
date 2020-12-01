@@ -68,6 +68,19 @@ class ListMovieAdapter :
         }
     }
 
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataEntity>() {
+            override fun areItemsTheSame(oldItem: DataEntity, newItem: DataEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: DataEntity, newItem: DataEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: DataEntity, itemClicked: () -> Unit) {
             with(itemView) {
@@ -102,6 +115,7 @@ class ListMovieAdapter :
     }
 
     fun setNetworkState(newNetworkState: NetworkState) {
+
         val previousState = this.networkState
         val hadExtraRow = hasExtraRow()
         this.networkState = newNetworkState
@@ -123,16 +137,5 @@ class ListMovieAdapter :
         fun onItemClicked(data: DataEntity)
     }
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataEntity>() {
-            override fun areItemsTheSame(oldItem: DataEntity, newItem: DataEntity): Boolean {
-                return oldItem.id == newItem.id
-            }
 
-            @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldItem: DataEntity, newItem: DataEntity): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
 }
