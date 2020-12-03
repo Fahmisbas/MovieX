@@ -14,8 +14,7 @@ import com.acsl.moviex.util.EspressoIdlingResource
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class ListAdapter :
-    PagedListAdapter<DataEntity, ListAdapter.ViewHolder>(DIFF_CALLBACK) {
+class ListAdapter : PagedListAdapter<DataEntity, ListAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     var onItemClickCallback: OnItemClickCallback? = null
 
@@ -32,7 +31,6 @@ class ListAdapter :
             }
         }
     }
-
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: DataEntity, itemClicked: () -> Unit) {

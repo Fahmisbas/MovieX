@@ -16,9 +16,15 @@ class ResultResponse(
     @SerializedName("poster_path")
     var posterPath: String?,
     var id: String?,
+    @SerializedName("backdrop_path")
+    var backdropPath: String?,
     @SerializedName("original_title")
     var originalTitle: String?,
     @SerializedName("original_name")
-    var originalName : String?,
-    var overview: String?
+    var originalName: String?,
+    var overview: String?,
+    @SerializedName("release_date")
+    var releaseDate: String?,
+    @SerializedName("first_air_date")
+    var firstAirDate: String?
 )

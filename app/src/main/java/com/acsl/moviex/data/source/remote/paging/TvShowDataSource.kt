@@ -1,4 +1,4 @@
-package com.acsl.moviex.ui.tabs.tvshow
+package com.acsl.moviex.data.source.remote.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
@@ -33,10 +33,12 @@ class TvShowDataSource(private val apiService: ApiService) :
                             tvShowList.add(
                                 DataEntity(
                                     result.posterPath,
-                                    result.id,
+                                    result.backdropPath,
+                                    result.id ?: "",
                                     result.originalName,
-                                    false,
-                                    result.overview
+                                    result.overview,
+                                    result.firstAirDate,
+                                    2
                                 )
                             )
                         }
@@ -67,10 +69,12 @@ class TvShowDataSource(private val apiService: ApiService) :
                             tvShowList.add(
                                 DataEntity(
                                     result.posterPath,
-                                    result.id,
+                                    result.backdropPath,
+                                    result.id ?: "",
                                     result.originalName,
-                                    false,
-                                    result.overview
+                                    result.overview,
+                                    result.firstAirDate,
+                                    2
                                 )
                             )
                         }
@@ -90,7 +94,6 @@ class TvShowDataSource(private val apiService: ApiService) :
             }
         })
         EspressoIdlingResource.decrement()
-
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DataEntity>) {}

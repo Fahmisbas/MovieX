@@ -1,4 +1,4 @@
-package com.acsl.moviex.ui.tabs.movie
+package com.acsl.moviex.data.source.remote.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
@@ -33,10 +33,12 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                             moviesList.add(
                                 DataEntity(
                                     result.posterPath,
-                                    result.id,
+                                    result.backdropPath,
+                                    result.id ?: "",
                                     result.originalTitle,
-                                    false,
-                                    result.overview
+                                    result.overview,
+                                    result.releaseDate,
+                                    1
                                 )
                             )
                         }
@@ -67,10 +69,12 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                             moviesList.add(
                                 DataEntity(
                                     result.posterPath,
-                                    result.id,
+                                    result.backdropPath,
+                                    result.id ?: "",
                                     result.originalTitle,
-                                    false,
-                                    result.overview
+                                    result.overview,
+                                    result.releaseDate,
+                                    1
                                 )
                             )
                         }
@@ -91,6 +95,7 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                 t.printStackTrace()
             }
         })
+
         EspressoIdlingResource.decrement()
     }
 

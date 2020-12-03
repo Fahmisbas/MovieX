@@ -10,5 +10,11 @@
     <string name="data">Movies</string>
     <string name="tv_shows">TV Shows</string>
     <string name="tv_favorite">Favorite</string>
+    <string name="error_msg">Something went wrong!</string>
+
+    <string name="successfully_added">Successfully Added</string>
+    <string name="successfully_removed">Successfully Removed</string>
+    <string name="add_favorite">Add to Favorite</string>
+    <string name="remove_favorite">Remove from Favorite</string>
 
 </resources>

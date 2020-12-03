@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -38,6 +39,7 @@ android {
             buildConfigField 'String', "BaseUrl" , BASE_URL
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,6 +65,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Network Lib
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -71,7 +75,9 @@ dependencies {
 
     //Room DB
     implementation "androidx.room:room-runtime:$roomVersion"
+    kapt  "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
+
 
     //Paging
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"

@@ -11,7 +11,6 @@ object DataDummy {
                 "/jlJ8nDhMhCYJuzOw3f52CP1W8MW.jpg",
                 "400160",
                 "Bronx",
-                "After the fall of the Galactic Empire, lawlessness has spread throughout the galaxy. A lone gunfighter makes his way through the outer reaches, earning his keep as a bounty hunter.",
             )
         )
         return movies
@@ -23,8 +22,7 @@ object DataDummy {
             DataEntity(
                 "/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg",
                 "82856",
-                "The Mandalorian",
-                "After the fall of the Galactic Empire, lawlessness has spread throughout the galaxy. A lone gunfighter makes his way through the outer reaches, earning his keep as a bounty hunter."
+                "The Mandalorian"
             )
         )
         return tvShows

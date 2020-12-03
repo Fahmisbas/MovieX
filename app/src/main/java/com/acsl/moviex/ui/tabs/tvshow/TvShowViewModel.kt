@@ -9,11 +9,13 @@ import com.acsl.moviex.vo.NetworkState
 
 class TvShowViewModel(private val repository: AppDataRepository) : ViewModel() {
 
+    private val movies = repository.getAllFavoriteMovies()
+
     val tvShowPagedList: LiveData<PagedList<DataEntity>> by lazy {
         repository.getAllTvShows()
     }
 
-    val networkState: LiveData<NetworkState> by lazy {
+    val tvShowNetworkState: LiveData<NetworkState> by lazy {
         repository.getTvNetworkState()
     }
 

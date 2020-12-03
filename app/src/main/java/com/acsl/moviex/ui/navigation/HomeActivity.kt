@@ -16,20 +16,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setupViewPager()
     }
 
+    private fun setupViewPager() {
 
-    private fun setupViewPager(
-    ) {
-        nav.setOnNavigationItemSelectedListener(this)
-        val sectionPagerAdapter =
-            SectionPagerAdapter(
-                this, supportFragmentManager
-            )
+        bottom_nav.setOnNavigationItemSelectedListener(this)
+        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager)
         view_pager.adapter = sectionPagerAdapter
-
 
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
@@ -41,16 +35,15 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> nav.menu.findItem(R.id.nav_movie).isChecked = true
-                    1 -> nav.menu.findItem(R.id.nav_tv_shows).isChecked = true
-                    else -> nav.menu.findItem(R.id.nav_favorites).isChecked = true
+                    0 -> bottom_nav.menu.findItem(R.id.nav_movie).isChecked = true
+                    1 -> bottom_nav.menu.findItem(R.id.nav_tv_shows).isChecked = true
+                    else -> bottom_nav.menu.findItem(R.id.nav_favorites).isChecked = true
                 }
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
