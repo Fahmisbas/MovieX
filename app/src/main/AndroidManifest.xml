@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.acsl.moviex">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,13 +11,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MovieX"
+        android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.navigation.HomeActivity"
+        <activity android:name=".ui.tabs.favorite.tvshow.TvShowFavoriteActivity"></activity>
+        <activity android:name=".ui.tabs.favorite.movie.MovieFavoriteActivity" />
+        <activity android:name=".ui.tabs.favorite.movie.FavoriteMovieAcrivity" />
+        <activity
+            android:name=".ui.navigation.HomeActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

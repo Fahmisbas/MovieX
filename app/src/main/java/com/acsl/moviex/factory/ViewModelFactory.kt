@@ -7,6 +7,8 @@ import com.acsl.moviex.data.source.AppDataRepository
 import com.acsl.moviex.di.Injection
 import com.acsl.moviex.ui.detail.DetailViewModel
 import com.acsl.moviex.ui.tabs.favorite.FavoriteViewModel
+import com.acsl.moviex.ui.tabs.favorite.movie.MovieFavoriteViewModel
+import com.acsl.moviex.ui.tabs.favorite.tvshow.TvShowFavoriteViewModel
 import com.acsl.moviex.ui.tabs.movie.MovieViewModel
 import com.acsl.moviex.ui.tabs.tvshow.TvShowViewModel
 
@@ -37,6 +39,12 @@ class ViewModelFactory(private val repository: AppDataRepository) :
             }
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MovieFavoriteViewModel::class.java) -> {
+                MovieFavoriteViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(TvShowFavoriteViewModel::class.java) -> {
+                TvShowFavoriteViewModel(repository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

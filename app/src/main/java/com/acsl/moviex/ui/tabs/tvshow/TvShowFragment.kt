@@ -51,7 +51,7 @@ class TvShowFragment : Fragment() {
         listAdapter.onItemClickCallback = object : ListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: DataEntity) {
                 Intent(activity, DetailActivity::class.java).apply {
-                    putExtra(DetailActivity.EXTRA_MOVIE_DETAIL, data)
+                    putExtra(DetailActivity.EXTRA_DATA_DETAIL, data)
                     startActivity(this)
                 }
             }

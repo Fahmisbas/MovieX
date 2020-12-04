@@ -28,13 +28,15 @@ class DetailActivity : AppCompatActivity() {
         getData()
         initViewModel()
         setToolbar()
+
     }
 
     private fun getData() {
-        data = intent.getParcelableExtra(EXTRA_MOVIE_DETAIL)
+        data = intent.getParcelableExtra(EXTRA_DATA_DETAIL)
+        data?.let { updateUi(it) }
         isFavorite = intent.getBooleanExtra(EXTRA_IS_FAVORITE, false)
-        data?.let {
-            updateUi(it)
+        if (isFavorite) {
+            showDeleteFunctionality()
         }
     }
 
@@ -71,15 +73,11 @@ class DetailActivity : AppCompatActivity() {
     private fun setStatusFavorite(statusFavorite: Boolean) {
         when (statusFavorite) {
             true -> {
-                btn_favorite.setImageResource(R.drawable.ic_min)
                 if (isFavorite) {
-                    if (btn_favorite.isPressed) {
-                        deleteTask()
-                        this@DetailActivity.statusFavorite = false
-                    }
-                    return
+                    showDeleteFunctionality()
+                } else {
+                    addTask()
                 }
-                addTask()
             }
             false -> {
                 deleteTask()
@@ -87,18 +85,33 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun showDeleteFunctionality() {
+        tv_favorite.text = resources.getString(R.string.remove_favorite)
+        btn_favorite.setImageResource(R.drawable.ic_min)
+        if (btn_favorite.isPressed) {
+            deleteTask()
+            this@DetailActivity.statusFavorite = false
+        }
+    }
+
     private fun deleteTask() {
         btn_favorite.setImageResource(R.drawable.ic_add)
-        data?.let { viewModel.deleteFavorite(it) }
-        isFavorite = false
         tv_favorite.text = resources.getString(R.string.add_favorite)
-        this.makeToast(resources.getString(R.string.successfully_removed))
+        data?.let {
+            viewModel.deleteFavorite(it)
+            isFavorite = false
+            this.makeToast(resources.getString(R.string.successfully_removed))
+        }
+
     }
 
     private fun addTask() {
-        data?.let { viewModel.insertFavorite(it) }
         tv_favorite.text = resources.getString(R.string.remove_favorite)
-        this.makeToast(resources.getString(R.string.successfully_removed))
+        btn_favorite.setImageResource(R.drawable.ic_min)
+        data?.let {
+            viewModel.insertFavorite(it)
+            this.makeToast(resources.getString(R.string.successfully_added))
+        }
     }
 
     private fun setToolbar() {
@@ -113,7 +126,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_MOVIE_DETAIL = "movie_detail"
+        const val EXTRA_DATA_DETAIL = "movie_detail"
         const val EXTRA_IS_FAVORITE = "is_favorite"
     }
 }

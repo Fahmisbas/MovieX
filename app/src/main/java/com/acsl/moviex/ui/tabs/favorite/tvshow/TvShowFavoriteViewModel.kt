@@ -1,4 +1,4 @@
-package com.acsl.moviex.ui.tabs.favorite
+package com.acsl.moviex.ui.tabs.favorite.tvshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import androidx.paging.PagedList
 import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.AppDataRepository
 
-class FavoriteViewModel(private val repository: AppDataRepository) : ViewModel() {
+class TvShowFavoriteViewModel(private val repository: AppDataRepository) : ViewModel() {
 
     fun getAllFavoriteTvShows(): LiveData<PagedList<DataEntity>> {
         val data = repository.getAllFavoriteTvShows()

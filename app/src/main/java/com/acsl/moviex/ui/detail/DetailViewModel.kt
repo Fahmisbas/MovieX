@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.AppDataRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: AppDataRepository) : ViewModel() {
@@ -21,5 +22,8 @@ class DetailViewModel(private val repository: AppDataRepository) : ViewModel() {
         }
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
+    }
 }

@@ -12,9 +12,8 @@ import com.acsl.moviex.ui.tabs.tvshow.TvShowFragment
 
 class SectionPagerAdapter(
     private val context: Context,
-    fm: FragmentManager,
-
-    ) :
+    fm: FragmentManager
+) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes

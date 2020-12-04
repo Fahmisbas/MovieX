@@ -12,7 +12,7 @@ import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.factory.ViewModelFactory
 import com.acsl.moviex.ui.adapter.ListAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
-import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_MOVIE_DETAIL
+import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_DATA_DETAIL
 import com.acsl.moviex.util.gone
 import com.acsl.moviex.util.visible
 import com.acsl.moviex.vo.Status
@@ -49,7 +49,7 @@ class MovieFragment : Fragment() {
         listAdapter.onItemClickCallback = object : ListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: DataEntity) {
                 Intent(activity, DetailActivity::class.java).apply {
-                    putExtra(EXTRA_MOVIE_DETAIL, data)
+                    putExtra(EXTRA_DATA_DETAIL, data)
                     startActivity(this)
                 }
             }

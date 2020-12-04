@@ -43,7 +43,7 @@ open class AppDataRepository(
     }
 
     override fun getAllFavoriteTvShows(): DataSource.Factory<Int, DataEntity> {
-        return localDataSource.getAllFavoriteMovies()
+        return localDataSource.getAllFavoriteTvShows()
     }
 
     override suspend fun insertFavorite(data: DataEntity) {
