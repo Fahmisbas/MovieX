@@ -9,23 +9,19 @@ import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.AppDataRepository
 import com.acsl.moviex.ui.navigation.dummy.DataDummy
 import com.acsl.moviex.ui.navigation.utils.PagedListUtil
-import com.acsl.moviex.ui.tabs.HomeViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(JUnit4::class)
 class HomeViewModelTest {
 
     @get:Rule
@@ -47,22 +43,36 @@ class HomeViewModelTest {
     @Test
     fun getMovies() {
         val mutableDummyData = MutableLiveData<PagedList<DataEntity>>()
+        val dummyContent = PagedListUtil.mockPagedList(DataDummy.generateDummyMovies())
+        mutableDummyData.postValue(dummyContent)
         val dummyData: LiveData<PagedList<DataEntity>> = mutableDummyData
-        GlobalScope.launch(Dispatchers.IO) {
-            val dummyContent = PagedListUtil.mockPagedList(DataDummy.generateDummyMovies())
-            mutableDummyData.postValue(dummyContent)
-            launch(Dispatchers.Main) {
-                `when`(repository.getAllMovies()).thenReturn(dummyData)
-                val courseEntities = viewModel.getAllMovies().value
-                verify(repository).getAllMovies()
-                Assert.assertNotNull(courseEntities)
-                Assert.assertEquals(1, courseEntities?.size)
 
-                viewModel.getAllMovies().observeForever(observer)
-                verify(observer).onChanged(dummyContent)
-            }
-        }
+
+        `when`(repository.getAllMovies()).thenReturn(dummyData)
+        val courseEntities = viewModel.getAllMovies().value
+        verify(repository).getAllMovies()
+        Assert.assertNotNull(courseEntities)
+        Assert.assertEquals(1, courseEntities?.size)
+
+        viewModel.getAllMovies().observeForever(observer)
+        verify(observer).onChanged(dummyContent)
     }
 
+    @Test
+    fun getTvShows() {
+        val mutableDummyData = MutableLiveData<PagedList<DataEntity>>()
+        val dummyData: LiveData<PagedList<DataEntity>> = mutableDummyData
+        val dummyContent = PagedListUtil.mockPagedList(DataDummy.generateDummyTvShows())
+        mutableDummyData.postValue(dummyContent)
 
+        `when`(repository.getAllTvShows()).thenReturn(dummyData)
+        val courseEntities = viewModel.getAllTvShows().value
+        verify(repository).getAllTvShows()
+        Assert.assertNotNull(courseEntities)
+        Assert.assertEquals(1, courseEntities?.size)
+
+        viewModel.getAllTvShows().observeForever(observer)
+        verify(observer).onChanged(dummyContent)
+    }
 }
+

@@ -12,10 +12,10 @@ import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.factory.ViewModelFactory
 import com.acsl.moviex.ui.adapter.ListAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
-import com.acsl.moviex.ui.tabs.HomeViewModel
+import com.acsl.moviex.ui.navigation.HomeViewModel
+import com.acsl.moviex.util.Status
 import com.acsl.moviex.util.gone
 import com.acsl.moviex.util.visible
-import com.acsl.moviex.vo.Status
 import kotlinx.android.synthetic.main.fragment_tv_shows.*
 
 
@@ -36,7 +36,7 @@ class TvShowFragment : Fragment() {
 
         initViewModel()
         initRecyclerView()
-        observerDataChanges()
+        observeDataChanges()
 
     }
 
@@ -64,7 +64,7 @@ class TvShowFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
     }
 
-    private fun observerDataChanges() {
+    private fun observeDataChanges() {
         viewModel.getAllTvShows().observe(viewLifecycleOwner, {
             listAdapter.submitList(it)
         })
@@ -75,7 +75,7 @@ class TvShowFragment : Fragment() {
         viewModel.getTvShowNetworkState().observe(viewLifecycleOwner, { networkState ->
             when (networkState.status) {
                 Status.RUNNING -> {
-                    if (viewModel.tvListIsEmpty()) {
+                    if (viewModel.tvShowListIsEmpty()) {
                         runningView()
                     }
                 }
@@ -83,7 +83,7 @@ class TvShowFragment : Fragment() {
                     successView()
                 }
                 Status.FAIL -> {
-                    if (viewModel.tvListIsEmpty()) {
+                    if (viewModel.tvShowListIsEmpty()) {
                         failedView()
                     }
                 }

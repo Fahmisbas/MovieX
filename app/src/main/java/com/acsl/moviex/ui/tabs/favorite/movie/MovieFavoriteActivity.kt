@@ -12,6 +12,7 @@ import com.acsl.moviex.ui.adapter.ListAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
 import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_DATA_DETAIL
 import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_IS_FAVORITE
+import com.acsl.moviex.ui.tabs.favorite.FavoriteViewModel
 import com.acsl.moviex.util.gone
 import com.acsl.moviex.util.visible
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class MovieFavoriteActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MovieFavoriteViewModel
+    private lateinit var viewModel: FavoriteViewModel
     private var listAdapter = ListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +29,11 @@ class MovieFavoriteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_favorite)
 
         setToolbar()
+
         initViewModel()
+
         initRecyclerView()
+
         observeData()
 
     }
@@ -47,7 +51,6 @@ class MovieFavoriteActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-
 
     private fun observeData() {
         viewModel.getAllFavoriteMovies().observe(this, { data ->
@@ -85,6 +88,6 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[MovieFavoriteViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
     }
 }

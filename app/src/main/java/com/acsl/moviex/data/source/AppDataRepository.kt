@@ -12,10 +12,10 @@ import com.acsl.moviex.data.source.remote.paging.TvShowDataSource
 import com.acsl.moviex.data.source.remote.response.ApiService
 import com.acsl.moviex.factory.MovieDataSourceFactory
 import com.acsl.moviex.factory.TvShowDataSourceFactory
-import com.acsl.moviex.vo.NetworkState
+import com.acsl.moviex.util.NetworkState
 
 open class AppDataRepository(
-    private val remoteDataSource: ApiService,
+    remoteDataSource: ApiService,
     private val localDataSource: FavoriteDao
 ) : AppDataSource {
 
@@ -55,17 +55,16 @@ open class AppDataRepository(
     }
 
     fun getTvShowNetworkState(): LiveData<NetworkState> {
-        return Transformations.switchMap<TvShowDataSource, NetworkState>(
+        return Transformations.switchMap(
             tvShowDataSourceFactory.tvShowLiveDataSource, TvShowDataSource::networkState
         )
     }
 
     fun getMovieNetworkState(): LiveData<NetworkState> {
-        return Transformations.switchMap<MovieDataSource, NetworkState>(
+        return Transformations.switchMap(
             moviesDataSourceFactory.movieLiveDataSource, MovieDataSource::networkState
         )
     }
-
 
     companion object {
         @Volatile

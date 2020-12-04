@@ -1,4 +1,4 @@
-package com.acsl.moviex.vo
+package com.acsl.moviex.util
 
 enum class Status {
     RUNNING,

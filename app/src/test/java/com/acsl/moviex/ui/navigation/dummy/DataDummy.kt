@@ -1,27 +1,8 @@
 package com.acsl.moviex.ui.navigation.dummy
 
-import androidx.paging.PagedList
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.response.ApiService
-import com.acsl.moviex.factory.MovieDataSourceFactory
-import com.acsl.moviex.factory.TvShowDataSourceFactory
 
 object DataDummy {
-
-    private val config = PagedList.Config.Builder()
-        .setEnablePlaceholders(false)
-        .setPageSize(5)
-        .setInitialLoadSizeHint(10)
-        .build()
-
-    val remoteDataSource = ApiService.getInstance()
-
-    private val moviesDataSourceFactory: MovieDataSourceFactory =
-        MovieDataSourceFactory(remoteDataSource)
-    private val tvShowDataSourceFactory: TvShowDataSourceFactory =
-        TvShowDataSourceFactory(remoteDataSource)
-
-
     fun generateDummyMovies(): List<DataEntity> {
         val movies: ArrayList<DataEntity> = ArrayList()
         movies.add(
@@ -53,6 +34,5 @@ object DataDummy {
         )
         return tvShows
     }
-
 }
 

@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">MovieX</string>
 
-
     <string name="tab_title_movie">Movies</string>
     <string name="tab_title_tvshow">TV Shows</string>
-    <string name="tab_title_favorite">Movies</string>
+    <string name="tab_title_favorite">Favorite</string>
 
     <string name="data">Movies</string>
     <string name="error_msg">Something went wrong!</string>
@@ -12,8 +11,8 @@
     <string name="fav_movie_title">Favorite Movies</string>
     <string name="fav_tv_show_title">Favorite Tv Shows</string>
 
-    <string name="empty_fav_tv_show">Your Favorite Tv Show is Empty!</string>
-    <string name="empty_fav_movie">Your Favorite Movie is Empty!</string>
+    <string name="empty_fav_tv_show">Your Favorite Tv Shows is Empty!</string>
+    <string name="empty_fav_movie">Your Favorite Movies is Empty!</string>
 
 
     <string name="successfully_added">Successfully Added</string>

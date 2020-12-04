@@ -18,8 +18,4 @@ interface FavoriteDao {
 
     @Query("SELECT * FROM favorite_table WHERE is_favorite = 2")
     fun getAllFavoriteTvShows(): DataSource.Factory<Int, DataEntity>
-
-    @Query("SELECT EXISTS(SELECT * FROM favorite_table WHERE originalTitle = :title)")
-    fun isExist(title: String): Boolean
-
 }

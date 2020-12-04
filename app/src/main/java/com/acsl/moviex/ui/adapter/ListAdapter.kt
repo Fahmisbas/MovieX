@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.acsl.moviex.BuildConfig.BaseImageUrl
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_IMAGE_URL
 import com.acsl.moviex.util.EspressoIdlingResource
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movie.view.*
@@ -37,7 +37,7 @@ class ListAdapter : PagedListAdapter<DataEntity, ListAdapter.ViewHolder>(DIFF_CA
             with(itemView) {
                 EspressoIdlingResource.increment()
 
-                Glide.with(this.context).load(BASE_IMAGE_URL + data.posterPath).into(poster)
+                Glide.with(this.context).load(BaseImageUrl + data.posterPath).into(poster)
                 setOnClickListener { itemClicked.invoke() }
                 tv_movie_name.text = data.originalTitle
                 tv_movie_desc.text = data.overview

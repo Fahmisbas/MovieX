@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import com.acsl.moviex.BuildConfig.BaseImageUrl
 import com.acsl.moviex.R
 import com.acsl.moviex.data.entities.DataEntity
-import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_IMAGE_URL
 import com.acsl.moviex.factory.ViewModelFactory
 import com.acsl.moviex.util.makeToast
 import com.bumptech.glide.Glide
@@ -26,7 +26,9 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         getData()
+
         initViewModel()
+
         setToolbar()
 
     }
@@ -53,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
             toolbar_title.text = it.originalTitle
 
             Glide.with(this)
-                .load(BASE_IMAGE_URL + movies.backdropPath)
+                .load(BaseImageUrl + movies.backdropPath)
                 .into(img_movie)
         }
     }
@@ -102,7 +104,6 @@ class DetailActivity : AppCompatActivity() {
             isFavorite = false
             this.makeToast(resources.getString(R.string.successfully_removed))
         }
-
     }
 
     private fun addTask() {

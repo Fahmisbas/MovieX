@@ -10,6 +10,7 @@ import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.factory.ViewModelFactory
 import com.acsl.moviex.ui.adapter.ListAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
+import com.acsl.moviex.ui.tabs.favorite.FavoriteViewModel
 import com.acsl.moviex.util.gone
 import com.acsl.moviex.util.visible
 import kotlinx.android.synthetic.main.activity_tv_show_favorite.*
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class TvShowFavoriteActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: TvShowFavoriteViewModel
+    private lateinit var viewModel: FavoriteViewModel
     private val listAdapter = ListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +85,6 @@ class TvShowFavoriteActivity : AppCompatActivity() {
 
     private fun intiViewModel() {
         val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[TvShowFavoriteViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
     }
 }

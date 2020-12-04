@@ -1,4 +1,4 @@
-package com.acsl.moviex.vo
+package com.acsl.moviex.util
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

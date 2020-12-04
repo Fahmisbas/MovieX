@@ -6,7 +6,7 @@ import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.data.source.remote.response.ApiService
 import com.acsl.moviex.data.source.remote.response.MovieResponse
 import com.acsl.moviex.util.EspressoIdlingResource
-import com.acsl.moviex.vo.NetworkState
+import com.acsl.moviex.util.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +24,7 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
         EspressoIdlingResource.increment()
 
         networkState.postValue(NetworkState.running())
+
         apiService.getAllMovies(page).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
@@ -60,6 +61,7 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
         EspressoIdlingResource.increment()
 
         networkState.postValue(NetworkState.running())
+
         apiService.getAllMovies(params.key).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {

@@ -13,10 +13,10 @@ import com.acsl.moviex.factory.ViewModelFactory
 import com.acsl.moviex.ui.adapter.ListAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
 import com.acsl.moviex.ui.detail.DetailActivity.Companion.EXTRA_DATA_DETAIL
-import com.acsl.moviex.ui.tabs.HomeViewModel
+import com.acsl.moviex.ui.navigation.HomeViewModel
+import com.acsl.moviex.util.Status
 import com.acsl.moviex.util.gone
 import com.acsl.moviex.util.visible
-import com.acsl.moviex.vo.Status
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : Fragment() {

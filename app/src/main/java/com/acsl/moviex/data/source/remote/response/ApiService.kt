@@ -1,9 +1,8 @@
 package com.acsl.moviex.data.source.remote.response
 
+import com.acsl.moviex.BuildConfig.ApiKey
+import com.acsl.moviex.BuildConfig.BaseUrl
 import com.acsl.moviex.data.source.remote.request.ApiRequest
-import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.API_KEY
-import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.BASE_URL
-import com.acsl.moviex.data.source.remote.request.ApiRequest.Companion.LANGUAGE_PREF
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -12,12 +11,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 open class ApiService {
 
+    private val languagePref = "en-US"
 
     fun getAllMovies(page: Int): Call<MovieResponse> =
-        getApiService().getAllMovies(API_KEY, LANGUAGE_PREF, page)
+        getApiService().getAllMovies(ApiKey, languagePref, page)
 
     fun getAllTvShows(page: Int): Call<MovieResponse> =
-        getApiService().getAllTvShows(API_KEY, LANGUAGE_PREF, page)
+        getApiService().getAllTvShows(ApiKey, languagePref, page)
 
 
     companion object {
@@ -36,7 +36,7 @@ open class ApiService {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

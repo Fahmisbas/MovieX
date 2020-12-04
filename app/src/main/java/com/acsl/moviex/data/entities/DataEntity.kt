@@ -14,12 +14,12 @@ class DataEntity(
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String?,
     @PrimaryKey var id: String,
-    @ColumnInfo(name = "originalTitle")
+    @ColumnInfo(name = "original_title")
     val originalTitle: String?,
     @ColumnInfo(name = "overview")
     val overview: String?,
     @ColumnInfo(name = "release_date")
     val releaseDate: String?,
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Int? // 1 for movie 2 for tvShows
+    val favoriteCategory: Int? // 1 for movie 2 for tvShows
 ) : Parcelable
