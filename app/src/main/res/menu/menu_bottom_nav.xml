@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/nav_movie"
-        android:title="@string/data"
+        android:title="@string/tab_title_movie"
         android:enabled="true"
         android:icon="@drawable/ic_movie" />
 
     <item
         android:id="@+id/nav_tv_shows"
-        android:title="@string/tv_shows"
+        android:title="@string/tab_title_tvshow"
         android:enabled="true"
         android:icon="@drawable/ic_tv"
         tools:ignore="HardcodedText" />
@@ -19,7 +19,6 @@
         android:id="@+id/nav_favorites"
         android:icon="@drawable/ic_favorite"
         android:enabled="true"
-        android:title="@string/tv_favorite" />
-
+        android:title="@string/tab_title_favorite" />
 
 </menu>

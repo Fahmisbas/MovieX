@@ -12,6 +12,7 @@ import com.acsl.moviex.data.entities.DataEntity
 import com.acsl.moviex.factory.ViewModelFactory
 import com.acsl.moviex.ui.adapter.ListAdapter
 import com.acsl.moviex.ui.detail.DetailActivity
+import com.acsl.moviex.ui.tabs.HomeViewModel
 import com.acsl.moviex.util.gone
 import com.acsl.moviex.util.visible
 import com.acsl.moviex.vo.Status
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_tv_shows.*
 class TvShowFragment : Fragment() {
 
     private var listAdapter = ListAdapter()
-    private lateinit var viewModel: TvShowViewModel
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,18 +61,18 @@ class TvShowFragment : Fragment() {
 
     private fun initViewModel() {
         val factory = ViewModelFactory.getInstance(requireContext())
-        viewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
     }
 
     private fun observerDataChanges() {
-        viewModel.tvShowPagedList.observe(viewLifecycleOwner, {
+        viewModel.getAllTvShows().observe(viewLifecycleOwner, {
             listAdapter.submitList(it)
         })
         observeNetworkState()
     }
 
     private fun observeNetworkState() {
-        viewModel.tvShowNetworkState.observe(viewLifecycleOwner, { networkState ->
+        viewModel.getTvShowNetworkState().observe(viewLifecycleOwner, { networkState ->
             when (networkState.status) {
                 Status.RUNNING -> {
                     if (viewModel.tvListIsEmpty()) {

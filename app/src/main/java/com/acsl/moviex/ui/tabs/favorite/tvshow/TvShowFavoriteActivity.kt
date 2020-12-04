@@ -40,7 +40,7 @@ class TvShowFavoriteActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
-        toolbar_title.text = resources.getString(R.string.fav_movie_title)
+        toolbar_title.text = resources.getString(R.string.fav_tv_show_title)
     }
 
     override fun onSupportNavigateUp(): Boolean {

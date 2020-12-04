@@ -54,7 +54,7 @@ open class AppDataRepository(
         localDataSource.delete(data)
     }
 
-    fun getTvNetworkState(): LiveData<NetworkState> {
+    fun getTvShowNetworkState(): LiveData<NetworkState> {
         return Transformations.switchMap<TvShowDataSource, NetworkState>(
             tvShowDataSourceFactory.tvShowLiveDataSource, TvShowDataSource::networkState
         )

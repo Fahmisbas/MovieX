@@ -44,6 +44,7 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                         }
                         callback.onResult(moviesList, null, page + 1)
                         networkState.postValue(NetworkState.success())
+                        EspressoIdlingResource.decrement()
                     }
                 }
             }
@@ -53,7 +54,6 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                 t.printStackTrace()
             }
         })
-        EspressoIdlingResource.decrement()
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, DataEntity>) {
@@ -82,7 +82,7 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                         if (networkCallback.totalPage >= params.key) {
                             callback.onResult(moviesList, params.key + 1)
                             networkState.postValue(NetworkState.success())
-
+                            EspressoIdlingResource.decrement()
                         } else {
                             networkState.postValue(NetworkState.reachedBottomList())
                         }
@@ -95,8 +95,6 @@ class MovieDataSource(private val apiService: ApiService) : PageKeyedDataSource<
                 t.printStackTrace()
             }
         })
-
-        EspressoIdlingResource.decrement()
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DataEntity>) {}
