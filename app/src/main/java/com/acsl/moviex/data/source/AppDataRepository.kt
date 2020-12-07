@@ -2,7 +2,6 @@ package com.acsl.moviex.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.acsl.moviex.data.entities.DataEntity
@@ -15,7 +14,7 @@ import com.acsl.moviex.factory.TvShowDataSourceFactory
 import com.acsl.moviex.util.NetworkState
 
 open class AppDataRepository(
-    remoteDataSource: ApiService,
+    private val remoteDataSource: ApiService,
     private val localDataSource: FavoriteDao
 ) : AppDataSource {
 
@@ -38,12 +37,12 @@ open class AppDataRepository(
         return LivePagedListBuilder(tvShowDataSourceFactory, config).build()
     }
 
-    override fun getAllFavoriteMovies(): DataSource.Factory<Int, DataEntity> {
-        return localDataSource.getAllFavoriteMovies()
+    override fun getAllFavoriteMovies(): LiveData<PagedList<DataEntity>> {
+        return LivePagedListBuilder(localDataSource.getAllFavoriteMovies(), 10).build()
     }
 
-    override fun getAllFavoriteTvShows(): DataSource.Factory<Int, DataEntity> {
-        return localDataSource.getAllFavoriteTvShows()
+    override fun getAllFavoriteTvShows(): LiveData<PagedList<DataEntity>> {
+        return LivePagedListBuilder(localDataSource.getAllFavoriteTvShows(), 10).build()
     }
 
     override suspend fun insertFavorite(data: DataEntity) {

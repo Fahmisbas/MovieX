@@ -50,7 +50,7 @@ class TvShowFavoriteActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerview() {
-        rv_tabs.apply {
+        rv_favorite_tv_show.apply {
             adapter = listAdapter
             setHasFixedSize(true)
         }
@@ -75,9 +75,9 @@ class TvShowFavoriteActivity : AppCompatActivity() {
                 listAdapter.submitList(data)
                 listAdapter.notifyDataSetChanged()
             } else {
-                tv_error.visible()
-                img_error.visible()
-                tv_error.text = resources.getString(R.string.empty_fav_tv_show)
+                tv_error_tv_show_favorite.visible()
+                img_error_tv_show_favorite.visible()
+                tv_error_tv_show_favorite.text = resources.getString(R.string.empty_fav_tv_show)
             }
             load_viewpager.gone()
         })

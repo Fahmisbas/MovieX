@@ -14,9 +14,10 @@
         android:theme="@style/Theme.MovieX"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.tabs.favorite.tvshow.TvShowFavoriteActivity"></activity>
+        <activity android:name=".ui.tabs.favorite.tvshow.TvShowFavoriteActivity">
+
+        </activity>
         <activity android:name=".ui.tabs.favorite.movie.MovieFavoriteActivity" />
-        <activity android:name=".ui.tabs.favorite.movie.FavoriteMovieAcrivity" />
         <activity
             android:name=".ui.navigation.HomeActivity"
             android:configChanges="orientation|screenSize">

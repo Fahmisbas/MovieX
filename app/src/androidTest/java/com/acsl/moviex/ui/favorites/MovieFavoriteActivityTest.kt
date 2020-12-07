@@ -1,4 +1,4 @@
-package com.acsl.moviex.ui.navigation
+package com.acsl.moviex.ui.favorites
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -11,19 +11,21 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.acsl.moviex.R
+import com.acsl.moviex.ui.tabs.favorite.movie.MovieFavoriteActivity
 import com.acsl.moviex.util.EspressoIdlingResource
-import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 @RunWith(AndroidJUnit4ClassRunner::class)
-class HomeActivityTest {
+class MovieFavoriteActivityTest {
 
     @get:Rule
-    var activityRule = ActivityScenarioRule(HomeActivity::class.java)
+    var activityRule = ActivityScenarioRule(MovieFavoriteActivity::class.java)
+
 
     @Before
     fun setUp() {
@@ -37,17 +39,18 @@ class HomeActivityTest {
 
     @Test
     fun loadMovies() {
-        onView(allOf(withId(R.id.rv_movie), isDisplayed()))
+        onView(withId(R.id.rv_movie_favorite)).check(matches(isDisplayed()))
     }
 
     @Test
     fun isDetailActivityVisible() {
-        onView(withId(R.id.rv_movie)).check(matches(isDisplayed())).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
-                click()
+        onView(withId(R.id.rv_movie_favorite))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    click()
+                )
             )
-        )
         onView(withId(R.id.tv_movie_name)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_overview)).check(matches(isDisplayed()))
     }

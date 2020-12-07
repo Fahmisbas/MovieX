@@ -58,16 +58,16 @@ class MovieFavoriteActivity : AppCompatActivity() {
                 listAdapter.submitList(data)
                 listAdapter.notifyDataSetChanged()
             } else {
-                tv_error.visible()
-                img_error.visible()
-                tv_error.text = resources.getString(R.string.empty_fav_movie)
+                tv_error_movie_favorite.visible()
+                img_error_movie_favorite.visible()
+                tv_error_movie_favorite.text = resources.getString(R.string.empty_fav_movie)
             }
             load_viewpager.gone()
         })
     }
 
     private fun initRecyclerView() {
-        rv_tabs.apply {
+        rv_movie_favorite.apply {
             adapter = listAdapter
             setHasFixedSize(true)
         }

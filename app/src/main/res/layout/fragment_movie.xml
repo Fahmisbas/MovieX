@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_movie_parent"
     tools:context=".ui.tabs.movie.MovieFragment">
 
     <ProgressBar
@@ -15,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img_error"
+        android:id="@+id/img_error_movie"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_error"
@@ -28,7 +29,7 @@
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/tv_error"
+        android:id="@+id/tv_error_movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/error_msg"
@@ -37,11 +38,11 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_error"
+        app:layout_constraintTop_toBottomOf="@id/img_error_movie"
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_tabs"
+        android:id="@+id/rv_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

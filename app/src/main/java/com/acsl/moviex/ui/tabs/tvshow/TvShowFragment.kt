@@ -35,13 +35,14 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViewModel()
-        initRecyclerView()
-        observeDataChanges()
 
+        initRecyclerView()
+
+        observeDataChanges()
     }
 
     private fun initRecyclerView() {
-        rv_tabs.apply {
+        rv_tabs_tv_shows.apply {
             adapter = listAdapter
             setHasFixedSize(true)
         }
@@ -94,20 +95,20 @@ class TvShowFragment : Fragment() {
 
     private fun runningView() {
         load_viewpager.visible()
-        img_error.gone()
-        tv_error.gone()
+        img_error_tv_show.gone()
+        tv_error_tv_show.gone()
     }
 
     private fun successView() {
         load_viewpager.gone()
-        img_error.gone()
-        tv_error.gone()
+        img_error_tv_show.gone()
+        tv_error_tv_show.gone()
     }
 
     private fun failedView() {
         load_viewpager.gone()
-        img_error.visible()
-        tv_error.visible()
+        img_error_tv_show.visible()
+        tv_error_tv_show.visible()
     }
 
     companion object {

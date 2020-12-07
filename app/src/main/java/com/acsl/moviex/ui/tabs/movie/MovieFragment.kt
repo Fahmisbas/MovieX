@@ -39,7 +39,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        rv_tabs.apply {
+        rv_movie.apply {
             adapter = listAdapter
             setHasFixedSize(true)
         }
@@ -91,20 +91,20 @@ class MovieFragment : Fragment() {
 
     private fun runningView() {
         load_viewpager.visible()
-        img_error.gone()
-        tv_error.gone()
+        img_error_movie.gone()
+        tv_error_movie.gone()
     }
 
     private fun successView() {
         load_viewpager.gone()
-        img_error.gone()
-        tv_error.gone()
+        img_error_movie.gone()
+        tv_error_movie.gone()
     }
 
     private fun failedView() {
         load_viewpager.gone()
-        img_error.visible()
-        tv_error.visible()
+        img_error_movie.visible()
+        tv_error_movie.visible()
     }
 
     companion object {
